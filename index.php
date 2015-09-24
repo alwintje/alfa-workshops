@@ -50,8 +50,12 @@ $user = false;
         ?>
 
         <form action="?login" method="post">
-            <input type="text" name="username" class="username" placeholder="username"/>
-            <input type="password" name="password" class="password" placeholder="password"/>
+            <div class="input-block username">
+                <input type="text" name="username" placeholder="E-mail"/> @alfa-college.nl
+            </div>
+            <div class="input-block password">
+                <input type="password" name="password" placeholder="Wachtwoord"/>
+            </div>
             <input type="submit" name="login" class="button" value="" style="background-color: <?php echo $bttnColor; ?>;"/>
 
             <div class="extra"></div>
