@@ -50,18 +50,67 @@ $user = false;
         ?>
 
         <form action="?login" method="post">
-            <div class="input-block username">
-                <input type="text" name="username" placeholder="E-mail"/> @alfa-college.nl
+            <div class="bg-left-side"></div>
+            <div class="input-block first">
+                <input type="text" name="username" id="username" placeholder="E-mail"/> <label for="username">@alfa-college.nl</label>
             </div>
-            <div class="input-block password">
+            <div class="input-block reg">
+                <input type="text" name="name" placeholder="Naam"/>
+            </div>
+            <div class="input-block reg">
+                <input type="text" name="surname" placeholder="Achternaam"/>
+            </div>
+            <div class="input-block last">
                 <input type="password" name="password" placeholder="Wachtwoord"/>
+            </div>
+            <div class="input-block reg">
+                <input type="password" name="cpassword" placeholder="Wachtwoord controle"/>
             </div>
             <input type="submit" name="login" class="button" value="" style="background-color: <?php echo $bttnColor; ?>;"/>
 
             <div class="extra"></div>
-            <div class="register">Registreer</div>
+            <div id="register">Registreer</div>
             <div class="forgot"><a href="#forgot">Wachtwoord vergeten</a></div>
         </form>
     </div>
+    <script>
+        var register = false;
+        var register_button = document.getElementById("register");
+        register_button.onclick = function(){
+            var reg_fields = document.getElementsByClassName("reg");
+            if(!register){
+                for(var i = 0; i < reg_fields.length; i++){
+                    reg_fields[i].style.display = "block";
+                }
+                register_button.innerHTML = "Login";
+                register = true;
+            }else{
+
+                for(var i = 0; i < reg_fields.length; i++){
+                    reg_fields[i].style.display = "none";
+                }
+                register_button.innerHTML = "Registreer";
+                register = false;
+            }
+            var last = document.querySelector(".last");
+            last.className = last.className.replace(/\blast\b/,'');
+
+            var input_blocks = document.querySelectorAll(".input-block");
+
+            var displayed_blocks = [];
+
+            for(var i=0; i< input_blocks.length;i++){
+                if(input_blocks[i].style.display != "none"){
+                    displayed_blocks[displayed_blocks.length] = input_blocks[i];
+                    console.log(displayed_blocks);
+                }
+            }
+            console.log("input blocks: ");
+            console.log(displayed_blocks);
+            var last_input_block = displayed_blocks[displayed_blocks.length-1];
+            console.log("Last block: "+last_input_block);
+            last_input_block.setAttribute("class", last_input_block.getAttribute("class")+" last");
+        };
+    </script>
 </body>
 </html>

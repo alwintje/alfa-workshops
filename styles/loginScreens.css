@@ -2,12 +2,19 @@
 #apollo{
     position: fixed;
     width: 300px;
-    height: 120px;
+    height: auto;
     left: 50%;
     top: 50%;
     margin-left: -150px;
-    margin-top: -60px;
     background: #34393D;
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+#apollo form{
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 #apollo .errors{
     position: absolute;
@@ -25,13 +32,25 @@
     display: block;
     border: solid 2px #34393D;
     width: 235px;
+    z-index: 5;
 }
 #apollo .input-block input{
+    position: relative;
     background: #1C1D21;
     color: #6c727d;
     border: none;
+    width: 230px;
+    z-index: 5;
 }
-#apollo .username{
+#apollo .input-block input:focus{
+    outline: none;
+}
+#apollo .input-block label{
+    position: relative;
+    z-index: 5;
+    cursor: text;
+}
+#apollo .input-block.first{
     -webkit-border-top-left-radius: 10px;
     -webkit-border-top-right-radius: 10px;
     -moz-border-radius-topleft: 10px;
@@ -39,28 +58,41 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-#apollo .password{
+#apollo .input-block.last{
     -webkit-border-bottom-left-radius: 10px;
     -moz-border-radius-bottomleft: 10px;
     border-bottom-left-radius: 10px;
 }
-#apollo .username input{
-    width: 100px;
+#apollo .first input{
+    width: 120px;
 }
-#apollo .password input{
-    width: 220px;
+#apollo .bg-left-side{
+
+    position: absolute;
+    top: 10px;
+    width: 235px;
+    /*background: #1C1D21;*/
+    border-left: solid 20px #1C1D21;
+    border-right: solid 20px #1C1D21;
+    height: auto;
+    left: 2px;
+    bottom: 60px;
+    z-index: 1;
 }
 #apollo .extra{
     position: absolute;
-    top: 46px;
+    top: auto;
     width: 228px;
     border-left: solid 20px #1C1D21;
     height: 4px;
+    bottom: 92px;
     left: 2px;
+    z-index: 5;
 }
 #apollo .button{
     position: absolute;
-    top: 23px;
+    top: auto;
+    bottom: 69px;
     right: 0px;
     background: url('http://www.mein-suedamerika.de/themes/frontend/resources/images/caret_right.png') #1C1D21;
     background-size: 10px auto;
@@ -71,6 +103,15 @@
     border-radius: 50%;
     border: solid 5px #34393D;
     cursor: pointer;
+    z-index: 5;
+}
+@-moz-document url-prefix() {
+    #apollo .extra {
+        bottom: 95px;
+    }
+    #apollo .button{
+        bottom: 72px;
+    }
 }
 #apollo .button:hover{
     border-color: #43484c;
@@ -78,7 +119,7 @@
 #apollo .button:hover ~ .extra{
     background: #43484c;
 }
-#apollo .register{
+#apollo #register{
     position: relative;
     width: 100px;
     color: #595f6b;
@@ -97,7 +138,7 @@
     border-bottom-left-radius: 10px;
     cursor: pointer;
 }
-#apollo .register:hover{
+#apollo #register:hover{
     background: #43484c;
     color: #000;
 }
@@ -114,4 +155,7 @@
 }
 #apollo .forgot a{
     color: #838b97;
+}
+#apollo .input-block.reg{
+    display: none;
 }
