@@ -15,7 +15,7 @@ class Database{
         "user"          => "root",		// MySQL gebruikersnaam.
         "pass"          => "",			// MySQL wachtwoord.
         "name"          => "school",	// MySQL database naam.
-        "prefix"        => "alfa-workshops");	// Eerste deel van tabellen.
+        "prefix"        => "aw");	    // Eerste deel van tabellen. aw = alfa-wokshops
 
     private $mysqli;
     public function opendb() { // Maakt connectie met de database.

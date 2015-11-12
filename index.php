@@ -34,13 +34,11 @@ $user = false;
 <!--    </section>-->
     <div id="apollo">
         <?php
-        $bttnColor = "#1C1D21";
         $errors = null;
         if (isset($_POST['login'])) {
             $errors = $security->checkLogin($_POST['username'], $_POST['password']);
         }
         if ($errors != null) {
-            $bttnColor = "#880000";
             echo '
             <div class="errors">
                 ' . $errors . '
@@ -48,7 +46,7 @@ $user = false;
                 ';
         }
         ?>
-
+        <img src="alfa-college.png" />
         <form action="?login" method="post">
             <div class="bg-left-side"></div>
             <div class="input-block first">
@@ -66,7 +64,7 @@ $user = false;
             <div class="input-block reg">
                 <input type="password" name="cpassword" placeholder="Wachtwoord controle"/>
             </div>
-            <input type="submit" name="login" class="button" value="" style="background-color: <?php echo $bttnColor; ?>;"/>
+            <input type="submit" name="login" class="button" value=""/>
 
             <div class="extra"></div>
             <div id="register">Registreer</div>

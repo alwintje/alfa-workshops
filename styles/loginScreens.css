@@ -6,7 +6,8 @@
     left: 50%;
     top: 50%;
     margin-left: -150px;
-    background: #34393D;
+    /*background: #34393D;*/
+    background: #FFFFFF;
     -ms-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
@@ -27,17 +28,20 @@
 }
 #apollo .input-block{
     padding: 12px 20px;
-    background: #1C1D21;
+    /*background: #1C1D21;*/
+    background: #979797;
     color: #6c727d;
     display: block;
-    border: solid 2px #34393D;
     width: 235px;
     z-index: 5;
+    margin: 4px 0;
 }
 #apollo .input-block input{
     position: relative;
-    background: #1C1D21;
+    /*background: #1C1D21;*/
+    background: #979797;
     color: #6c727d;
+    color: #000000;
     border: none;
     width: 230px;
     z-index: 5;
@@ -49,6 +53,7 @@
     position: relative;
     z-index: 5;
     cursor: text;
+    color: #000000;
 }
 #apollo .input-block.first{
     -webkit-border-top-left-radius: 10px;
@@ -74,27 +79,32 @@
     /*background: #1C1D21;*/
     border-left: solid 20px #1C1D21;
     border-right: solid 20px #1C1D21;
+    border-left: solid 20px #979797;
+    border-right: solid 20px #979797;
     height: auto;
-    left: 2px;
+    left: 0;
     bottom: 60px;
     z-index: 1;
 }
 #apollo .extra{
     position: absolute;
     top: auto;
-    width: 228px;
+    width: 230px;
     border-left: solid 20px #1C1D21;
+    border-left: solid 20px #979797;
     height: 4px;
     bottom: 92px;
-    left: 2px;
+    left: 0;
     z-index: 5;
+    bottom: 94px;
 }
 #apollo .button{
     position: absolute;
     top: auto;
     bottom: 69px;
     right: 0px;
-    background: url('http://www.mein-suedamerika.de/themes/frontend/resources/images/caret_right.png') #1C1D21;
+    /*background: url('http://www.mein-suedamerika.de/themes/frontend/resources/images/caret_right.png') #1C1D21;*/
+    background: url('http://www.mein-suedamerika.de/themes/frontend/resources/images/caret_right.png') #979797;
     background-size: 10px auto;
     background-position: 16px;
     background-repeat: no-repeat;
@@ -102,34 +112,42 @@
     height: 50px;
     border-radius: 50%;
     border: solid 5px #34393D;
+    border: solid 5px #FFF;
     cursor: pointer;
     z-index: 5;
+    bottom: 71px;
 }
 @-moz-document url-prefix() {
     #apollo .extra {
-        bottom: 95px;
+        bottom: 92px;
+        /*bottom: 97px;*/
     }
     #apollo .button{
-        bottom: 72px;
+        /*bottom: 73px;*/
+        bottom: 69px;
     }
 }
 #apollo .button:hover{
     border-color: #43484c;
+    border-color: #747474;
 }
 #apollo .button:hover ~ .extra{
     background: #43484c;
+    background: #747474;
 }
 #apollo #register{
     position: relative;
     width: 100px;
     color: #595f6b;
+    color: #080a0e;
     font-family: "Lucida Grande", arial, sans-serif;
     font-size: 13px;
     padding: 5px 0;
     text-align: center;
     background: #1C1D21;
-    left: 177px;
-    top: -2px;
+    background: #979797;
+    left: 175px;
+    top: -4px;
     -webkit-border-bottom-right-radius: 10px;
     -webkit-border-bottom-left-radius: 10px;
     -moz-border-radius-bottomright: 10px;
@@ -140,6 +158,7 @@
 }
 #apollo #register:hover{
     background: #43484c;
+    background: #747474;
     color: #000;
 }
 #apollo .forgot{
@@ -148,13 +167,13 @@
     width: 177px;
     height: 23px;
     line-height: 23px;
-    color: #595f6b;
+    color: #333;
     font-family: "Lucida Grande", arial, sans-serif;
     font-size: 13px;
     text-align: center;
 }
 #apollo .forgot a{
-    color: #838b97;
+    color: #4a4e59;
 }
 #apollo .input-block.reg{
     display: none;
