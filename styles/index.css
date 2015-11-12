@@ -47,6 +47,12 @@
 
 .text-box h1{
     color: grey;
+    margin-bottom: 60px;
+}
+
+.text-box p{
+    position: relative;
+    bottom: 40px;
 }
 .text-box .btn-text-box{
     background: #0850A0;
@@ -56,6 +62,9 @@
     position: absolute;
     bottom: 0;
     float: right;
+    border:none;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 .text-box .btn-text-box:hover{
