@@ -18,10 +18,21 @@
             </li>
         </ul>
     </div>
+<section class="events">
+    <article class="text-box">
+        <h1>21-11-2015</h1>
+        <p>Deze workshop is perfect enzo</p>
 
-    <section>
+        <button class="btn-text-box">Aanmelden</button>
+    </article>
+    <article class="text-box">
+        <h1>21-11-2015</h1>
+        <p>Deze workshop is perfect enzo</p>
 
-    </section>
+        <button class="btn-text-box">Aanmelden</button>
+    </article>
+</section>
+
 </body>
 
 </html>
