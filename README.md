@@ -13,4 +13,4 @@ De database werkt!
 ------------
 
     Wachtwoord wordt opgeslagen op de volgende manier:
-    md5("wachtwoord"."email")   --natuurlijk is de . een + 
+    md5("wachtwoord"."email")   -- In de class security is een functie makePass()!
