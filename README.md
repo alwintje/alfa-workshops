@@ -11,6 +11,7 @@ Die tabel moet 5 colums hebben:
 - password = varchar(32)
     
 
-Wachtwoord wordt opgeslagen op de volgende manier:
 --------------- 
+
+    Wachtwoord wordt opgeslagen op de volgende manier:
     md5("wachtwoord"+"email")   --natuurlijk is de + een punt in php 
