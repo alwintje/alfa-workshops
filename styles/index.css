@@ -6,25 +6,38 @@
 .menu{
     height: 30px;
     width: 100%;
-    background: #ff0000;
+    background: #DE0000;
     color: #fff;
-    font-size: 20px;
+    font-size: 21px;
     cursor: default;
 }
 
 .menu ul{
-    list-style-type: none;
+    display: inline-block;
 }
 
 .menu li{
-    display: inline;
-    padding: 30px;
-    transition: 0.5s;
-}
+    display: inline-block;
+    padding: 0 30px;
 
-.menu li:hover{
+}
+.menu li a{
+    color: #FFF;
+    text-decoration: none;
+    -webkit-transition: 500ms;
+    -moz-transition: 500ms;
+    -ms-transition: 500ms;
+    -o-transition: 500ms;
+    transition: 500ms;
+}
+.menu li a:hover{
     cursor: pointer;
     color: #0850A0;
+    -webkit-transition: 0ms;
+    -moz-transition: 0ms;
+    -ms-transition: 0ms;
+    -o-transition: 0ms;
+    transition: 0ms;
 }
 
 .events{
@@ -39,10 +52,9 @@
     border: 1px solid #000;
     padding: 5px;
     position: relative;
-    transition: 0.5s;
 }
 .text-box:hover{
-    background: #C0ffff;
+    /*background: #C0ffff;*/
 }
 
 .text-box h1{
@@ -57,7 +69,6 @@
 .text-box .btn-text-box{
     background: #0850A0;
     color: #fff;
-    transition: 0.5s;
     padding: 5px;
     position: absolute;
     bottom: 0;

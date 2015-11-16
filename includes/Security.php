@@ -49,7 +49,7 @@ class Security{
             return 'Verkeerde mail of wachtwoord.';
         }else{
             $_SESSION['alfa-workshops'] = $email."//".$this->makePass($pass, $email);
-            $this->core->loadPage("home.php");
+            $this->core->loadPage("index.php");
         }
         return null;
     }
@@ -92,7 +92,7 @@ class Security{
         $query = $this->db->doquery("INSERT INTO {{table}} SET email='$email', firstname='$firstname', lastname='$lastname', password='$pass' ","users");
 
         $_SESSION['alfa-workshops'] = $email."//".$pass;
-        $this->core->loadPage("home.php");
+        $this->core->loadPage("index.php");
 
 
         return null;
