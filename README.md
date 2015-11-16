@@ -13,4 +13,4 @@ Die tabel moet 5 colums hebben:
 ------------
 
     Wachtwoord wordt opgeslagen op de volgende manier:
-    md5("wachtwoord"+"email")   --natuurlijk is de + een punt in php 
+    md5("wachtwoord"."email")   --natuurlijk is de . een + 
