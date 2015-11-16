@@ -37,23 +37,6 @@ class Database{
 
     }
 
-    public function checksession(){
-
-        $row = false;
-
-        if (isset($_SESSION['football'])) {
-            $theuser = explode("//", $_SESSION['football']);
-            $query = $this->doquery("SELECT * FROM {{table}} WHERE username='$theuser[0]' AND password='$theuser[1]'", "users");
-
-            if (mysqli_num_rows($query) != 1) {
-                die("Er is iets mis met de sessions (Error 1).");
-                unset($_SESSION['football']);
-            }
-            $row = mysqli_fetch_array($query);
-        }
-
-        return $row;
-    }
     public function esc_str($string){
         return $this->mysqli->real_escape_string($string);
     }

@@ -1,4 +1,8 @@
 
+
+
+
+
 #apollo{
     position: fixed;
     width: 300px;
@@ -8,8 +12,13 @@
     margin-left: -150px;
     /*background: #34393D;*/
     background: #FFFFFF;
-    -ms-transform: translateY(-50%);
+    /*-ms-transform: translateY(-50%);*/
+    /*-webkit-transform: translateY(-50%);*/
+    /*transform: translateY(-50%);*/
     -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
     transform: translateY(-50%);
 }
 #apollo form{
@@ -18,15 +27,31 @@
     height: 100%;
 }
 #apollo .errors{
-    position: absolute;
-    top: -50px;
+    position: relative;
     background: rgba(136,0,0,1);
     border-radius: 10px;
     padding: 12px 20px;
     margin: 2px;
-    width: 235px;
+    width: auto;
+    color: #FFF;
+}
+#apollo #endEmail{
+    position: absolute;
+    top: 40px;
+    left: 25px;
+    background: #333;
+    color: #FFF;
+    padding: 5px;
+    font-size: 12px;
+    z-index: 9;
+    display: none;
+    cursor: pointer;
+}
+#apollo #endEmail:hover{
+    background: #222;
 }
 #apollo .input-block{
+    position: relative;
     padding: 12px 20px;
     /*background: #1C1D21;*/
     background: #979797;
@@ -35,12 +60,16 @@
     width: 235px;
     z-index: 5;
     margin: 4px 0;
+
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-left-radius: 10px;
 }
 #apollo .input-block input{
     position: relative;
     /*background: #1C1D21;*/
     background: #979797;
-    color: #6c727d;
+    /*color: #6c727d;*/
     color: #000000;
     border: none;
     width: 230px;
@@ -48,12 +77,6 @@
 }
 #apollo .input-block input:focus{
     outline: none;
-}
-#apollo .input-block label{
-    position: relative;
-    z-index: 5;
-    cursor: text;
-    color: #000000;
 }
 #apollo .input-block.first{
     -webkit-border-top-left-radius: 10px;
@@ -63,14 +86,9 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-#apollo .input-block.last{
-    -webkit-border-bottom-left-radius: 10px;
-    -moz-border-radius-bottomleft: 10px;
-    border-bottom-left-radius: 10px;
-}
-#apollo .first input{
-    width: 120px;
-}
+/*#apollo .first input{*/
+    /*width: 120px;*/
+/*}*/
 #apollo .bg-left-side{
 
     position: absolute;
@@ -90,61 +108,78 @@
     position: absolute;
     top: auto;
     width: 230px;
-    border-left: solid 20px #1C1D21;
-    border-left: solid 20px #979797;
-    height: 4px;
-    bottom: 92px;
-    left: 0;
-    z-index: 5;
-    bottom: 94px;
+    /*border-left: solid 20px #1C1D21;*/
+    /*border-left: solid 20px #979797;*/
+    height: 8px;
+    left: 20px;
+    z-index: 2;
+    bottom: 96px;
 }
-#apollo .button{
+#apollo .buttonToClick::before{
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    background: #FFF;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+#apollo .buttonToClick{
     position: absolute;
     top: auto;
-    bottom: 69px;
-    right: 0px;
-    /*background: url('http://www.mein-suedamerika.de/themes/frontend/resources/images/caret_right.png') #1C1D21;*/
-    background: url('http://www.mein-suedamerika.de/themes/frontend/resources/images/caret_right.png') #979797;
-    background-size: 10px auto;
-    background-position: 16px;
-    background-repeat: no-repeat;
+    right: 0;
+    background: #333;
+    border: none;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
     width: 50px;
     height: 50px;
-    border-radius: 50%;
-    border: solid 5px #34393D;
-    border: solid 5px #FFF;
     cursor: pointer;
     z-index: 5;
-    bottom: 71px;
+    bottom: 76px;
 }
-@-moz-document url-prefix() {
-    #apollo .extra {
-        bottom: 92px;
-        /*bottom: 97px;*/
-    }
-    #apollo .button{
-        /*bottom: 73px;*/
-        bottom: 69px;
-    }
+#apollo .buttonToClick::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #000;
+    background: url('../img/caret_right.png') #979797;
+    background-size: 10px auto;
+    background-position: 20px;
+    background-repeat: no-repeat;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
 }
-#apollo .button:hover{
-    border-color: #43484c;
-    border-color: #747474;
+#apollo #button{
+    display: none;
 }
-#apollo .button:hover ~ .extra{
-    background: #43484c;
+
+#apollo .buttonToClick:hover::before{
+    /*border-color: #43484c;*/
+    background: #747474;
+}
+#apollo .buttonToClick:hover ~ .extra{
+    /*background: #43484c;*/
     background: #747474;
 }
 #apollo #register{
     position: relative;
     width: 100px;
-    color: #595f6b;
+    /*color: #595f6b;*/
     color: #080a0e;
     font-family: "Lucida Grande", arial, sans-serif;
     font-size: 13px;
     padding: 5px 0;
     text-align: center;
-    background: #1C1D21;
+    /*background: #1C1D21;*/
     background: #979797;
     left: 175px;
     top: -4px;
@@ -174,7 +209,47 @@
 }
 #apollo .forgot a{
     color: #4a4e59;
+    cursor: pointer;
+    text-decoration: underline;
 }
 #apollo .input-block.reg{
     display: none;
+}
+#forgotWindow{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: #EEE;
+    z-index: 10;
+    overflow: hidden;
+    -webkit-transition: height 500ms;
+    -moz-transition: height 500ms;
+    -ms-transition: height 500ms;
+    -o-transition: height 500ms;
+    transition: height 500ms;
+}
+
+#forgotWindow input{
+    position: relative;
+    left: 5px;
+    top: 11px;
+    width: 289px;
+    padding: 10px;
+}
+
+#forgotWindow input[name="back"]{
+    position: relative;
+    left: 5px;
+    top: 14px;
+    width: 289px;
+    padding: 10px;
+}
+#forgotWindow .username{
+    position: relative;
+    left: 6px;
+    top: 7px;
+    width: 265px;
+    padding: 10px;
 }

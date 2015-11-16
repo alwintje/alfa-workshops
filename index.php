@@ -9,15 +9,20 @@ $db = new Database();
 $db->opendb();
 $security = new Security($core, $db);
 $user = false;
-
+if($security->checksession()){
+    $core->loadPage("home.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Alfa-Workshops</title>
     <link href="styles/base.css" rel="stylesheet" />
     <link href="styles/loginScreens.css" rel="stylesheet" />
+
 </head>
 <body>
 <?php
@@ -37,7 +42,13 @@ $user = false;
         $errors = null;
         if (isset($_POST['login'])) {
             $errors = $security->checkLogin($_POST['username'], $_POST['password']);
+        }elseif(isset($_POST['register'])){
+            $errors = $security->checkRegister($_POST['username'], $_POST['firstname'], $_POST['lastname'], $_POST['password'], $_POST['cpassword']);
         }
+        ?>
+        <img src="alfa-college.png" />
+        <?php
+
         if ($errors != null) {
             echo '
             <div class="errors">
@@ -45,70 +56,156 @@ $user = false;
             </div>
                 ';
         }
+
         ?>
-        <img src="alfa-college.png" />
-        <form action="?login" method="post">
+        <form action="?login" method="post" id="loginRegisterForm">
             <div class="bg-left-side"></div>
             <div class="input-block first">
-                <input type="text" name="username" id="username" placeholder="E-mail"/> <label for="username">@alfa-college.nl</label>
+                <input type="text" name="username" id="username" placeholder="E-mail"/>
+            </div>
+            <div id="endEmail"></div>
+            <div class="input-block reg">
+                <input type="text" name="firstname" placeholder="Naam"/>
             </div>
             <div class="input-block reg">
-                <input type="text" name="name" placeholder="Naam"/>
+                <input type="text" name="lastname" placeholder="Achternaam"/>
             </div>
-            <div class="input-block reg">
-                <input type="text" name="surname" placeholder="Achternaam"/>
-            </div>
-            <div class="input-block last">
+            <div class="input-block">
                 <input type="password" name="password" placeholder="Wachtwoord"/>
             </div>
             <div class="input-block reg">
                 <input type="password" name="cpassword" placeholder="Wachtwoord controle"/>
             </div>
-            <input type="submit" name="login" class="button" value=""/>
-
+            <input type="submit" name="login" id="button" value="" />
+            <div class="buttonToClick" onclick="document.getElementById('button').click();"></div>
             <div class="extra"></div>
             <div id="register">Registreer</div>
-            <div class="forgot"><a href="#forgot">Wachtwoord vergeten</a></div>
+            <div class="forgot"><a id="forgot">Wachtwoord vergeten</a></div>
+            <div id="forgotWindow">
+                <input type="text" name="mail" class="username" placeholder="E-mail"/>
+                <input type="submit" name="forgot" value="Opvragen" />
+                <input type="button" name="back" value="Terug" />
+            </div>
         </form>
+
     </div>
+
     <script>
+
+
+        var timeOut = false;
+        var timeOutEnterDelay = false;
+
         var register = false;
         var register_button = document.getElementById("register");
-        register_button.onclick = function(){
+
+
+        if(window.location.hash.substr(1) == "register"){
+            registerOrNot();
+        }
+        register_button.onclick = registerOrNot;
+
+
+        var forgot = false;
+        document.getElementById("forgot").onclick = forgotWindow;
+        document.querySelector("input[name='back']").onclick = forgotWindow;
+
+        if(window.location.hash.substr(1) == "forgot"){
+            forgotWindow();
+        }
+        var email = document.getElementById("username");
+        var endEmail = document.getElementById("endEmail");
+        email.onkeypress = function(e){
+            e = e || window.event;
+            if(e.keyCode == 13){
+                if(endEmail.style.display != "none"){
+                    endEmail.click();
+                }
+                if(timeOutEnterDelay){
+                    return false;
+                }
+            }
+
+        };
+        email.onkeyup = function(e){
+
+            var values = e.originalTarget.value.split("@");
+            if(values.length > 1){
+                if(values[1].length >= 1){
+                    var a = finishMail("student.alfa-college.nl", values[0], values[1]);
+                    var b = finishMail("alfa-college.nl", values[0], values[1]);
+
+                    if(!a && !b){
+                        removeEndEmail();
+                    }
+                }else{
+                    removeEndEmail();
+                }
+                email.setAttribute("autocomplete", "off");
+            }else{
+                email.setAttribute("autocomplete", "on");
+                removeEndEmail();
+            }
+        };
+        endEmail.onclick = function (){
+            email.value = this.innerHTML;
+        };
+        function removeEndEmail(){
+            if(endEmail.style.display != "none"){
+                clearTimeout(timeOut);
+                timeOut = "";
+                endEmail.style.display = "none";
+            }
+        }
+        function forgotWindow() {
+            if (!forgot) {
+                document.getElementById("forgotWindow").style.height = "100%";
+            } else {
+                document.getElementById("forgotWindow").style.height = "";
+            }
+            forgot = !forgot;
+        }
+        function registerOrNot(){
             var reg_fields = document.getElementsByClassName("reg");
             if(!register){
                 for(var i = 0; i < reg_fields.length; i++){
                     reg_fields[i].style.display = "block";
                 }
+                document.getElementById("loginRegisterForm").setAttribute("action", "?login#register");
                 register_button.innerHTML = "Login";
-                register = true;
+                document.getElementById("button").setAttribute("name", "register");
             }else{
-
                 for(var i = 0; i < reg_fields.length; i++){
                     reg_fields[i].style.display = "none";
                 }
+                document.getElementById("loginRegisterForm").setAttribute("action", "?login");
                 register_button.innerHTML = "Registreer";
-                register = false;
+                document.getElementById("button").setAttribute("name", "login");
             }
-            var last = document.querySelector(".last");
-            last.className = last.className.replace(/\blast\b/,'');
+            register = !register;
+        }
+        function stringStartsWith (string, prefix) {
+            return string.slice(0, prefix.length) == prefix;
+        }
+        function finishMail(mail,valBefore, valAfter){
+            if(stringStartsWith(mail, valAfter) && mail != valAfter){
 
-            var input_blocks = document.querySelectorAll(".input-block");
-
-            var displayed_blocks = [];
-
-            for(var i=0; i< input_blocks.length;i++){
-                if(input_blocks[i].style.display != "none"){
-                    displayed_blocks[displayed_blocks.length] = input_blocks[i];
-                    console.log(displayed_blocks);
-                }
+                endEmail.innerHTML = valBefore+"@"+mail;
+                endEmail.style.display = "block";
+                clearTimeout(timeOut);
+                timeOut = setTimeout(function (){
+                    endEmail.style.display = "none";
+                }, 4000);
+                timeOutEnterDelay = setTimeout(function (){
+                    timeOutEnterDelay = false;
+                }, 5000);
+                return true;
             }
-            console.log("input blocks: ");
-            console.log(displayed_blocks);
-            var last_input_block = displayed_blocks[displayed_blocks.length-1];
-            console.log("Last block: "+last_input_block);
-            last_input_block.setAttribute("class", last_input_block.getAttribute("class")+" last");
-        };
+            return false;
+        }
     </script>
+<?php
+    $core->checkLoad();
+?>
 </body>
 </html>
