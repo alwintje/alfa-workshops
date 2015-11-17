@@ -16,7 +16,9 @@ De database werkt!
     - setting_name = varchar(30)
     - email_hosts = text
     - active = boolean of tinyint(1)
-- De SQL hiervoor:
+
+De SQL hiervoor:
+------------
 
     CREATE TABLE IF NOT EXISTS `aw_settings` (
     `id` int(3) NOT NULL,
