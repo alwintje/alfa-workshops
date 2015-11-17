@@ -100,15 +100,31 @@ class Security{
 
     public function isEmail($email){
         $mail = explode('@', $email);
+
+
+
         if(count($mail) != 2){
             return "Email is niet juist.";
-        }elseif($mail[1] != "alfa-college.nl" && $mail[1] != "student.alfa-college.nl"){
+        }elseif(!$this->emailIsAlfaMail($mail[1])){
             return "Alleen Alfa-mail adres is toegestaan.";
         }else{
             return null;
         }
-    }
 
+    }
+    public function emailIsAlfaMail($mail){
+        $q = $this->db->doquery("SELECT * FROM {{table}} WHERE active='1' LIMIT 1","settings");
+        $r = mysqli_fetch_array($q);
+
+
+        $isAlfaMail = false;
+        $mails = explode(",", $r['email_hosts']);
+        foreach($mails as $val){
+            $isAlfaMail = $mail == $val ? true : $isAlfaMail;
+        }
+        return $isAlfaMail;
+
+    }
     public function makePass($pass, $mail){
         return md5($pass.$mail);
     }
