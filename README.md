@@ -21,7 +21,7 @@ De SQL voor de tabellen:
       `firstname` varchar(30) NOT NULL,
       `lastname` varchar(30) NOT NULL,
       `password` varchar(32) NOT NULL
-    ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 
 
@@ -30,3 +30,5 @@ Wachtwoorden
 
     Wachtwoord wordt opgeslagen op de volgende manier:
     md5("wachtwoord"."email")   -- In de class security is een functie makePass()!
+
+

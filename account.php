@@ -12,6 +12,11 @@ $user = false;
 if($security->checksession()){
     $core->loadPage("index.php");
 }
+
+$query = $db->doquery("SELECT * FROM {{table}} WHERE active='1' LIMIT 1","settings");
+$settings = mysqli_fetch_array($query);
+
+$mailHosts = explode(",", $settings['email_hosts']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,12 +137,23 @@ if($security->checksession()){
             var values = e.originalTarget.value.split("@");
             if(values.length > 1){
                 if(values[1].length >= 1){
-                    var a = finishMail("student.alfa-college.nl", values[0], values[1]);
-                    var b = finishMail("alfa-college.nl", values[0], values[1]);
+                    var arr = [];
 
-                    if(!a && !b){
-                        removeEndEmail();
-                    }
+                    <?php
+                        foreach($mailHosts as $key => $val){
+                            echo '
+                            arr['.$key.'] = finishMail("'.$val.'", values[0], values[1]);';
+                        }
+                        echo "\n";
+                        echo "if(";
+                        foreach($mailHosts as $key => $val){
+                            echo '!arr['.$key.'] && ';
+                        }
+                        echo "true";
+                        echo "){removeEndEmail()}";
+                    ?>
+
+
                 }else{
                     removeEndEmail();
                 }
