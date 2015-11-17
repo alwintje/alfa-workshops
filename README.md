@@ -1,21 +1,4 @@
-Ik heb een aantal dingen gedaan.
-De database werkt!
 
-- Nu moet je een database hebben met de naam: school
-- Daarin moet je een tabel aanmaken met de naam: aw_users
-- Die tabel moet 5 colums hebben:
-    - id = int(5)
-    - email = varchar(100)
-    - firstname = varchar(30)
-    - lastname = varchar(30)
-    - password = varchar(32)
-
-- Je moet nog een tabel hebben met de naam: aw_settings
-- Die tabel moet 3 colums hebben:
-    - id = int(5)
-    - setting_name = varchar(30)
-    - email_hosts = text
-    - active = boolean of tinyint(1)
 
 De SQL voor de tabellen:
 ------------
