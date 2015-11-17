@@ -31,7 +31,6 @@ De SQL voor de tabellen:
     INSERT INTO `aw_settings` (`id`, `setting_name`, `email_hosts`, `active`) VALUES
     (1, 'default', 'student.alfa-college.nl,alfa-college.nl', 1);
 
-------------
 
     CREATE TABLE IF NOT EXISTS `aw_users` (
     `id` int(5) NOT NULL,
@@ -41,9 +40,6 @@ De SQL voor de tabellen:
       `password` varchar(32) NOT NULL
     ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-
-    INSERT INTO `aw_users` (`id`, `email`, `firstname`, `lastname`, `password`) VALUES
-    (1, 'a.kroesen@student.alfa-college.nl', 'Alwin', 'Kroesen', '5f64d4a67b4b6bc5ea65c958637f7840');
 
 
 Wachtwoorden
