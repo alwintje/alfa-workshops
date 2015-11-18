@@ -42,12 +42,19 @@ if(isset($_GET['logout'])){
         </ul>
     </div>
     <section class="events">
+        <?php
+        $query = $db->doquery("SELECT * FROM {{table}} ORDER BY date ","events");
+        while($row = mysqli_fetch_array($query)){
+            ?>
         <article class="text-box">
-            <h1>21-11-2015</h1>
-            <p>Deze workshop is perfect enzo</p>
-
-            <button class="btn-text-box">Aanmelden</button>
+            <h1><?php echo $row['date']; ?></h1>
+            <h1><?php echo $row['name']; ?></h1>
+            <p> <?php echo $row['description']; ?> </p>
+            <a href="Workshop.php?id=<?php echo $row['id']; ?>">Aanmelden</a>
         </article>
+        <?php
+        }
+        ?>
     </section>
     <?php
         $core->checkLoad();

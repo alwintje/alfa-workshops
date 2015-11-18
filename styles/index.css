@@ -68,7 +68,13 @@
     position: relative;
     bottom: 40px;
 }
-.text-box .btn-text-box{
+.events a{
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    /*color: initial;*/
     background: #0850A0;
     color: #fff;
     padding: 5px;
@@ -79,9 +85,11 @@
     border-radius: 5px;
     margin-bottom: 5px;
 }
-
-.text-box .btn-text-box:hover{
-    background: #0b3263;
-    cursor: pointer;
+.events a:hover{
+background: #0b3263;
+cursor: pointer;
 }
+
+
+
 
