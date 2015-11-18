@@ -31,7 +31,7 @@ if(isset($_GET['logout'])){
 <div class="header">
     <img src="img/alfa-college.png" />
 </div>
-<div class="menu">
+<div class="menu">ik bnnoelle
     <ul>
         <li>
             <a href="#home">Home</a>
@@ -46,7 +46,8 @@ if(isset($_GET['logout'])){
     $getId = $_GET['id'];
     $query = $db->doquery("SELECT * FROM {{table}} WHERE id=$getId","workshops");
     while($row = mysqli_fetch_array($query)){
-        echo $row['id'];
+        echo "Id: " .$row['id'];
+        echo "<br/>";
         echo $row['description'];
     }
     ?>
