@@ -1,8 +1,12 @@
 .header{
     width: 100%;
     height: 50px;
+    padding: 10px 0;
 }
 
+.header img{
+    margin-left: 20%;
+}
 .menu{
     height: 30px;
     width: 100%;
@@ -13,12 +17,13 @@
 }
 
 .menu ul{
+    margin-left: 20%;
     display: inline-block;
 }
 
 .menu li{
     display: inline-block;
-    padding: 0 30px;
+    padding: 0 20px 0 0;
 
 }
 .menu li a{
@@ -53,9 +58,6 @@
     padding: 5px;
     position: relative;
 }
-.text-box:hover{
-    /*background: #C0ffff;*/
-}
 
 .text-box h1{
     color: grey;
@@ -72,14 +74,14 @@
     padding: 5px;
     position: absolute;
     bottom: 0;
-    float: right;
+    right: 5px;
     border:none;
     border-radius: 5px;
     margin-bottom: 5px;
 }
 
 .text-box .btn-text-box:hover{
-    color: #000;
+    background: #0b3263;
     cursor: pointer;
 }
 

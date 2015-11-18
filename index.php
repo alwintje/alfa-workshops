@@ -1,6 +1,4 @@
 <?php
-
-
 session_start();
 
 require_once("includes/Core.php");
@@ -18,7 +16,6 @@ if(!$user){
 if(isset($_GET['logout'])){
     $security->logout();
 }
-
 ?>
 <!doctype html>
 <html>
