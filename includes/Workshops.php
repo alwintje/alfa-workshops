@@ -9,7 +9,6 @@
 
 class Workshops {
 
-
     private $db;
     private $core;
     private $user;
@@ -65,7 +64,6 @@ class Workshops {
                 }
             }
             echo "</article>";
-
         }
     }
     public function add($event){
