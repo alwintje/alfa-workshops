@@ -58,7 +58,7 @@ if(isset($_GET['logout'])){
             while($row = mysqli_fetch_array($query)){
                 ?>
                 <article class="text-box">
-                    <h1><?php echo $row['name']; ?></h1>
+                    <h2><?php echo $row['name']; ?> - <?php echo $row['location']; ?></h2>
                     <p> <?php echo $row['description']; ?> </p>
                     <a href="?register=<?php echo $row['id']; ?>">Aanmelden</a>
                 </article>
@@ -71,7 +71,7 @@ if(isset($_GET['logout'])){
                 ?>
                 <article class="text-box">
                     <h1><?php echo $row['date']; ?></h1>
-                    <h1><?php echo $row['name']; ?></h1>
+                    <h2><?php echo $row['name']; ?></h2>
                     <p> <?php echo $row['description']; ?> </p>
                     <a href="?workshops=<?php echo $row['id']; ?>">Aanmelden</a>
                 </article>
