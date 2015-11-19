@@ -76,7 +76,11 @@ if(isset($_GET['logout'])){
             }
             echo '</article>';
         }elseif(isset($_GET['workshops'])){
+
             require_once("includes/Workshops.php");
+            $workshops = new Workshops($core,$db,$user);
+            $workshops->getWorkshops($_GET['workshops']);
+
         }else{
 
             $query = $db->doquery("SELECT * FROM {{table}} ORDER BY event_date ","events");
