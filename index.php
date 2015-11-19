@@ -42,13 +42,13 @@ if(isset($_GET['logout'])){
                 if(isset($_GET['workshops'])){
                     echo '
                         <li>
-                            <a href="?editWorkshop='.$_GET['workshops'].'&add">Workshop toevoegen</a>
+                            <a href="?workshops='.$_GET['workshops'].'&add">Workshop toevoegen</a>
                         </li>
                     ';
                 }else {
                     echo '
                         <li>
-                            <a href="?editEvent&add">Evenementen toevoegen</a>
+                            <a href="?add">Evenementen toevoegen</a>
                         </li>
                     ';
                 }
