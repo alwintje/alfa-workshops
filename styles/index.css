@@ -29,15 +29,15 @@
 .menu li a{
     color: #FFF;
     text-decoration: none;
-    -webkit-transition: 500ms;
-    -moz-transition: 500ms;
-    -ms-transition: 500ms;
-    -o-transition: 500ms;
-    transition: 500ms;
+    -webkit-transition: 200ms;
+    -moz-transition: 200ms;
+    -ms-transition: 200ms;
+    -o-transition: 200ms;
+    transition: 200ms;
 }
 .menu li a:hover{
     cursor: pointer;
-    color: #0850A0;
+    color: #333;
     -webkit-transition: 0ms;
     -moz-transition: 0ms;
     -ms-transition: 0ms;
