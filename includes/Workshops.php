@@ -5,6 +5,10 @@
  * Date: 19-11-2015
  * Time: 15:03
  */
+
+// TODO
+
+
 $query = $db->doquery("SELECT * FROM {{table}} WHERE event='".$_GET['workshops']."' ","workshops");
 
 $event_q = $db->doquery("SELECT * FROM {{table}} WHERE id='".$_GET['workshops']."' ", "events");
