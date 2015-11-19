@@ -35,12 +35,12 @@ class HandleEvents{
             $mailConfirm = $this->db->esc_str($_POST['mail_confirm']);
             $error = 0;
 
-
+            // check op name and description
             if(strlen($name) < 2){$error++;echo 'Naam moet langer zijn dan 2 tekens.<br />';}
             if(strlen($description) < 10){$error++;echo 'Descriptie moet langer zijn dan 10 tekens.<br />';}
 
-            //TODO CHECK OP DATUMS
-
+            //CHECK OP DATUMS
+            if(strlen($startdateRegistration > $enddateRegistration )){$error++; echo "De startdatum mag niet groter zijn!";}
 
 
             if($error == 0){
@@ -79,10 +79,6 @@ class HandleEvents{
             if(strlen($description) < 10){$error++;echo 'Descriptie moet langer zijn dan 10 tekens.<br />';}
 
             //TODO CHECK OP DATUMS
-
-
-
-
 
             if($error == 0){
                 $this->db->doquery("UPDATE {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', mail_confirm='$mailConfirm' WHERE id='$id'","events");
