@@ -60,13 +60,18 @@
 }
 
 .text-box h1{
-    color: grey;
-    margin-bottom: 60px;
+    color: #a7a7a7;
+    line-height: 30px;
+    font-size: 20px;
 }
-
+.text-box h2{
+    line-height: 30px;
+    font-size: 18px;
+    color: #000;
+}
 .text-box p{
-    position: relative;
-    bottom: 40px;
+    padding: 10px 0;
+    font-size: 15px;
 }
 .events a{
     -webkit-appearance: button;
