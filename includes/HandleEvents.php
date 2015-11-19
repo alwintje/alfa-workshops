@@ -46,6 +46,7 @@ class HandleEvents{
             if($error == 0){
                 $this->db->doquery("INSERT INTO {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', mail_confirm='$mailConfirm'","events");
                 $this->form("?editEvent&add");
+                echo "Succesvol toegevoegd<br />";
             }else{
                 $this->form("?editEvent&add",$name, $description, $date, $startdateRegistration, $enddateRegistration, $rating, $mailConfirm);
             }
@@ -82,7 +83,7 @@ class HandleEvents{
 
             if($error == 0){
                 $this->db->doquery("UPDATE {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', mail_confirm='$mailConfirm' WHERE id='$id'","events");
-
+                echo "Succesvol aangepast<br />";
                 $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' LIMIT 1","events");
                 $r = mysqli_fetch_array($q);
                 $this->form("?editEvent&edit=".$id,$r['name'],$r['description'],$r['event_date'],$r['startdate_registration'],$r['enddate_registration'],$r['rating'],$r['mail_confirm']);
