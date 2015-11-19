@@ -1,8 +1,8 @@
-/*@import url(https://fonts.googleapis.com/css?family=Open+Sans);*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
-@import url(http://fonts.googleapis.com/css?family=Lato);
-@import url(http://fonts.googleapis.com/css?family=Montserrat:700);
-@import url(http://fonts.googleapis.com/css?family=Merriweather);
+/*@import url(http://fonts.googleapis.com/css?family=Lato);*/
+/*@import url(http://fonts.googleapis.com/css?family=Montserrat:700);*/
+/*@import url(http://fonts.googleapis.com/css?family=Merriweather);*/
 
 *{
     margin: 0;
@@ -13,8 +13,8 @@ html, body{
     height: 100%;
     /*background: #34393D;*/
     background: #FCFCFC;
-    /*font-family: 'Open Sans', sans-serif;*/
-    font-family: "Montserrat",sans-serif,arial;
+    font-family: 'Open Sans', sans-serif;
+    /*font-family: "Montserrat",sans-serif,arial;*/
 }
 
 section{
