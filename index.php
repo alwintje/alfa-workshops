@@ -61,44 +61,50 @@ if(isset($_GET['logout'])){
     </div>
     <section class="events">
         <?php
-        if(isset($_GET['editEvent'])){
-            require_once("includes/HandleEvents.php");
-            echo '<article class="text-box">';
-            $handleEvents = new HandleEvents($core, $db);
-            if(isset($_GET['add'])){
-                $handleEvents->add();
-            }elseif(isset($_GET['edit'])){
-                $handleEvents->edit($_GET['edit']);
-            }
-            echo '</article>';
-        }elseif(isset($_GET['workshops'])){
+        if(isset($_GET['workshops'])){
 
             require_once("includes/Workshops.php");
             $workshops = new Workshops($core,$db,$user);
-            $workshops->getWorkshops($_GET['workshops']);
+            if(isset($_GET['add'])){
+                $workshops->add($_GET['workshops']);
+            }else{
+                $workshops->getWorkshops($_GET['workshops']);
+            }
 
         }else{
+            require_once("includes/HandleEvents.php");
+            $handleEvents = new HandleEvents($core, $db);
+            if(isset($_GET['add'])){
+                echo '<article class="text-box">';
+                $handleEvents->add();
+                echo '</article>';
+            }elseif(isset($_GET['edit'])){
+                echo '<article class="text-box">';
+                $handleEvents->edit($_GET['edit']);
+                echo '</article>';
+            }else{
 
-            $query = $db->doquery("SELECT * FROM {{table}} ORDER BY event_date ","events");
-            while($row = mysqli_fetch_array($query)){
-                ?>
-                <article class="text-box">
-                    <h1><?php echo $row['event_date']; ?></h1>
-                    <h2><?php echo $row['name']; ?></h2>
-                    <p> <?php echo $row['description']; ?> </p>
-                    <?php
+                $query = $db->doquery("SELECT * FROM {{table}} ORDER BY event_date ","events");
+                while($row = mysqli_fetch_array($query)){
+                    ?>
+                    <article class="text-box">
+                        <h1><?php echo $row['event_date']; ?></h1>
+                        <h2><?php echo $row['name']; ?></h2>
+                        <p> <?php echo $row['description']; ?> </p>
+                        <?php
                         if($row['startdate_registration'] <= date("Y-m-d") && date("Y-m-d") <=  $row['enddate_registration']){
-                    ?>
-                        <a href="?workshops=<?php echo $row['id']; ?>">Aanmelden</a>
-                    <?php
+                            ?>
+                            <a href="?workshops=<?php echo $row['id']; ?>">Aanmelden</a>
+                            <?php
                         }else{
-                    ?>
-                        <a href="?workshops=<?php echo $row['id']; ?>">Bekijken</a>
-                    <?php
+                            ?>
+                            <a href="?workshops=<?php echo $row['id']; ?>">Bekijken</a>
+                            <?php
                         }
-                    ?>
-                </article>
-                <?php
+                        ?>
+                    </article>
+                    <?php
+                }
             }
         }
         ?>

@@ -68,6 +68,41 @@ class Workshops {
 
         }
     }
+    public function add($event){
+        $this->form("?workshops=".$event."&add");
+    }
+
+    public function form($action, $name=false, $description=false, $startTime=false, $endTime=false,$maxReg=false, $location=false){
+
+        echo '
+        <form action="'.$action.'" method="post">
+            <label for="name" class="headLabel">Naam:</label>
+            <input type="text" name="name" id="name" value="'.($name != false ? $name : "").'" /><br />
+
+            <label for="description" class="headLabel">Omschrijving:</label>
+            <textarea name="description" id="description">'.($description != false ? $description : "").'</textarea><br />
+
+            <label for="form_date" class="headLabel">Begin tijd:</label>
+            <div id="form_date">
+                '.$this->core->getHour("start_time",($startTime != false ? $startTime : false)).'
+                '.$this->core->getMinutes("start_time",($startTime != false ? $startTime : false)).'
+            </div>
+            <label for="form_startdate_registration" class="headLabel">Eind tijd:</label>
+            <div id="form_startdate_registration">
+                '.$this->core->getHour("end_time",($endTime != false ? $endTime : false)).'
+                '.$this->core->getMinutes("end_time",($endTime != false ? $endTime : false)).'
+            </div>
+
+            <label for="max_reg" class="headLabel">Maximale aanmeldingen:</label>
+            <input type="number" name="max_reg" id="max_reg" value="'.($maxReg != false ? $maxReg : "").'" /><br />
+
+            <label for="location" class="headLabel">Locatie</label>
+            <input type="text" name="location" id="location" value="'.($location != false ? $location : "").'" /><br />
+            <br /><br />
+            <input type="submit" name="add" value="Toevoegen" />
+        </form>
+        ';
+    }
 
 
 }
