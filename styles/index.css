@@ -94,7 +94,8 @@
 background: #0b3263;
 cursor: pointer;
 }
-
-
+label.headLabel{
+    display: block;
+}
 
 

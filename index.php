@@ -24,8 +24,13 @@ if(isset($_GET['logout'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Alfa workshops</title>
-    <link rel="stylesheet" type="text/css" href="styles/index.css">
-    <link rel="stylesheet" type="text/css" href="styles/base.css"
+    <link rel="stylesheet" type="text/css" href="styles/index.css" />
+    <link rel="stylesheet" type="text/css" href="styles/base.css" />
+    <link rel="stylesheet" type="text/css" href="styles/pickers.css" />
+    <script src="js/jquery-2.1.4.js"></script>
+    <script src="js/jquery.datetimepicker.js"></script>
+    <script src="js/pickers.js"></script>
+
 </head>
 <body>
     <div class="header">
@@ -38,11 +43,19 @@ if(isset($_GET['logout'])){
             </li>
             <?php
             if($user['role'] == 2){
-                echo '
+                if(isset($_GET['workshops'])){
+                    echo '
                         <li>
-                            <a href="?addEvent">Evenementen toevoegen</a>
+                            <a href="?editWorkshop='.$_GET['workshops'].'&add">Workshop toevoegen</a>
                         </li>
                     ';
+                }else {
+                    echo '
+                        <li>
+                            <a href="?editEvent&add">Evenementen toevoegen</a>
+                        </li>
+                    ';
+                }
             }
             ?>
             <li>
@@ -53,46 +66,37 @@ if(isset($_GET['logout'])){
     <section class="events">
         <?php
         if(isset($_GET['editEvent'])){
+            require_once("includes/HandleEvents.php");
+            echo '<article class="text-box">';
+            $handleEvents = new HandleEvents($core, $db);
             if(isset($_GET['add'])){
-
+                $handleEvents->add();
+            }elseif(isset($_GET['edit'])){
+                $handleEvents->edit($_GET['edit']);
             }
-        ?>
-            <article class="text-box">
-                <form action="?editEvent&add">
-                    <label for="name">Naam:</label><input type="text" name="name" id="name" />
-                    <label for="description">Omschrijving:</label><input type="text" name="description" id="description" />
-                    <label for="date">Datum:</label><input type="text" name="date" id="date" />
-                    <label for="startdate_registration">Start aanmeldingen:</label><input type="text" name="startdate_registration" id="startdate_registration" />
-                    <label for="enddate_registration">Einde aanmeldingen:</label><input type="text" name="enddate_registration" id="enddate_registration" />
-                    <label for="rating">Waarderingen:</label><input type="text" name="rating" id="rating" />
-                    <label for="mail_confirm">Mail bevestiging:</label><input type="text" name="mail_confirm" id="mail_confirm" />
-                </form>
-            </article>
-
-        <?
-
-
+            echo '</article>';
         }elseif(isset($_GET['workshops'])){
-            $query = $db->doquery("SELECT * FROM {{table}} WHERE event='".$_GET['workshops']."' ","workshops");
-            while($row = mysqli_fetch_array($query)){
-                ?>
-                <article class="text-box">
-                    <h2><?php echo $row['name']; ?> - <?php echo $row['location']; ?></h2>
-                    <p> <?php echo $row['description']; ?> </p>
-                    <a href="?register=<?php echo $row['id']; ?>">Aanmelden</a>
-                </article>
-                <?php
-            }
+            require_once("includes/Workshops.php");
         }else{
 
-            $query = $db->doquery("SELECT * FROM {{table}} ORDER BY date ","events");
+            $query = $db->doquery("SELECT * FROM {{table}} ORDER BY event_date ","events");
             while($row = mysqli_fetch_array($query)){
                 ?>
                 <article class="text-box">
-                    <h1><?php echo $row['date']; ?></h1>
+                    <h1><?php echo $row['event_date']; ?></h1>
                     <h2><?php echo $row['name']; ?></h2>
                     <p> <?php echo $row['description']; ?> </p>
-                    <a href="?workshops=<?php echo $row['id']; ?>">Aanmelden</a>
+                    <?php
+                        if($row['startdate_registration'] <= date("Y-m-d") && date("Y-m-d") <=  $row['enddate_registration']){
+                    ?>
+                        <a href="?workshops=<?php echo $row['id']; ?>">Aanmelden</a>
+                    <?php
+                        }else{
+                    ?>
+                        <a href="?workshops=<?php echo $row['id']; ?>">Bekijken</a>
+                    <?php
+                        }
+                    ?>
                 </article>
                 <?php
             }
