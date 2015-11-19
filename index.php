@@ -34,10 +34,10 @@ if(isset($_GET['logout'])){
     <div class="menu">
         <ul>
             <li>
-                <a href="#home">Home</a>
+                <a href="?">Evenementen</a>
             </li>
             <li>
-                <a href="#evenementen">Evementen</a>
+                <a href="?logout">Loguit</a>
             </li>
             <?php
                 if($user['role'] == 2){
