@@ -39,13 +39,22 @@ if(isset($_GET['logout'])){
             <li>
                 <a href="#evenementen">Evementen</a>
             </li>
+            <?php
+                if($user['role'] == 2){
+                    echo '
+                        <li>
+                            <a href="?addEvent">Evenementen toevoegen</a>
+                        </li>
+                    ';
+                }
+            ?>
         </ul>
     </div>
     <section class="events">
         <?php
 
         if(isset($_GET['workshops'])){
-            $query = $db->doquery("SELECT * FROM {{table}} WHERE event='".$_GET['workshop']."' ","workshops");
+            $query = $db->doquery("SELECT * FROM {{table}} WHERE event='".$_GET['workshops']."' ","workshops");
             while($row = mysqli_fetch_array($query)){
                 ?>
                 <article class="text-box">
