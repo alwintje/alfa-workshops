@@ -43,16 +43,31 @@ if(isset($_GET['logout'])){
     </div>
     <section class="events">
         <?php
-        $query = $db->doquery("SELECT * FROM {{table}} ORDER BY date ","events");
-        while($row = mysqli_fetch_array($query)){
-            ?>
-        <article class="text-box">
-            <h1><?php echo $row['date']; ?></h1>
-            <h1><?php echo $row['name']; ?></h1>
-            <p> <?php echo $row['description']; ?> </p>
-            <a href="Workshop.php?id=<?php echo $row['id']; ?>">Aanmelden</a>
-        </article>
-        <?php
+
+        if(isset($_GET['workshop'])){
+            $query = $db->doquery("SELECT * FROM {{table}} WHERE event='".$_GET['workshop']."' ","workshops");
+            while($row = mysqli_fetch_array($query)){
+                ?>
+                <article class="text-box">
+                    <h1><?php echo $row['name']; ?></h1>
+                    <p> <?php echo $row['description']; ?> </p>
+                    <a href="?register=<?php echo $row['id']; ?>">Aanmelden</a>
+                </article>
+                <?php
+            }
+        }else{
+
+            $query = $db->doquery("SELECT * FROM {{table}} ORDER BY date ","events");
+            while($row = mysqli_fetch_array($query)){
+                ?>
+                <article class="text-box">
+                    <h1><?php echo $row['date']; ?></h1>
+                    <h1><?php echo $row['name']; ?></h1>
+                    <p> <?php echo $row['description']; ?> </p>
+                    <a href="?workshop=<?php echo $row['id']; ?>">Aanmelden</a>
+                </article>
+                <?php
+            }
         }
         ?>
     </section>
