@@ -44,7 +44,7 @@ if(isset($_GET['logout'])){
     <section class="events">
         <?php
 
-        if(isset($_GET['workshop'])){
+        if(isset($_GET['workshops'])){
             $query = $db->doquery("SELECT * FROM {{table}} WHERE event='".$_GET['workshop']."' ","workshops");
             while($row = mysqli_fetch_array($query)){
                 ?>
@@ -64,7 +64,7 @@ if(isset($_GET['logout'])){
                     <h1><?php echo $row['date']; ?></h1>
                     <h1><?php echo $row['name']; ?></h1>
                     <p> <?php echo $row['description']; ?> </p>
-                    <a href="?workshop=<?php echo $row['id']; ?>">Aanmelden</a>
+                    <a href="?workshops=<?php echo $row['id']; ?>">Aanmelden</a>
                 </article>
                 <?php
             }
