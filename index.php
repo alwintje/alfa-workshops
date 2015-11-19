@@ -26,10 +26,6 @@ if(isset($_GET['logout'])){
     <title>Alfa workshops</title>
     <link rel="stylesheet" type="text/css" href="styles/index.css" />
     <link rel="stylesheet" type="text/css" href="styles/base.css" />
-    <link rel="stylesheet" type="text/css" href="styles/pickers.css" />
-    <script src="js/jquery-2.1.4.js"></script>
-    <script src="js/jquery.datetimepicker.js"></script>
-    <script src="js/pickers.js"></script>
 
 </head>
 <body>
