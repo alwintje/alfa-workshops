@@ -73,6 +73,12 @@
     padding: 10px 0;
     font-size: 15px;
 }
+.events .rightBottom{
+
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+}
 .events a{
     -webkit-appearance: button;
     -moz-appearance: button;
@@ -83,12 +89,8 @@
     background: #0850A0;
     color: #fff;
     padding: 5px;
-    position: absolute;
-    bottom: 0;
-    right: 5px;
     border:none;
     border-radius: 5px;
-    margin-bottom: 5px;
 }
 .events a:hover{
 background: #0b3263;
@@ -97,5 +99,38 @@ cursor: pointer;
 label.headLabel{
     display: block;
 }
+.succes, .error{
+    display: block;
+    padding: 5px;
+    color: #FFF;
+    margin: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: solid 1px #FFF;
+}
+.succes{
+    background: #5cb85c;
+    border-color: #4cae4c;
+}
+.error{
+    background: #d9534f;
+    border-color: #d43f3a;
+}
 
-
+input, textarea{
+    padding: 5px;
+}
+select{
+    padding: 3px 5px;
+}
+option{
+    padding: 2px 5px;
+}
+label{
+    font-weight: 600;
+    padding: 5px 0;
+}
+.trueFalse label{
+    font-weight: 100;
+}

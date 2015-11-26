@@ -91,6 +91,7 @@ if(isset($_GET['logout'])){
                         <h1><?php echo $row['event_date']; ?></h1>
                         <h2><?php echo $row['name']; ?></h2>
                         <p> <?php echo $row['description']; ?> </p>
+                        <div class="rightBottom">
                         <?php
                         if($row['startdate_registration'] <= date("Y-m-d") && date("Y-m-d") <=  $row['enddate_registration']){
                             ?>
@@ -101,7 +102,12 @@ if(isset($_GET['logout'])){
                             <a href="?workshops=<?php echo $row['id']; ?>">Bekijken</a>
                             <?php
                         }
+
+                        if($user['role'] == 2){
+                            echo '<a href="?edit='.$row['id'].'">Aanpassen</a>';
+                        }
                         ?>
+                        </div>
                     </article>
                     <?php
                 }

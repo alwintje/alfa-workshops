@@ -36,17 +36,17 @@ class HandleEvents{
             $error = 0;
 
             // check op name and description
-            if(strlen($name) < 2){$error++;echo 'Naam moet langer zijn dan 2 tekens.<br />';}
-            if(strlen($description) < 10){$error++;echo 'Descriptie moet langer zijn dan 10 tekens.<br />';}
+            if(strlen($name) < 2){$error++;echo '<span class="error">Naam moet langer zijn dan 2 tekens.</span>';}
+            if(strlen($description) < 10){$error++;echo '<span class="error">Descriptie moet langer zijn dan 10 tekens.</span>';}
 
             //CHECK OP DATUMS
-            if(strlen($startdateRegistration > $enddateRegistration )){$error++; echo "De startdatum mag niet groter zijn!";}
+            if(strlen($startdateRegistration > $enddateRegistration )){$error++; echo "De start datum mag niet groter zijn als de eind datum!</span>";}
 
 
             if($error == 0){
                 $this->db->doquery("INSERT INTO {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', mail_confirm='$mailConfirm'","events");
                 $this->form("?editEvent&add");
-                echo "Succesvol toegevoegd<br />";
+                echo '<span class="succes">Succesvol toegevoegd</span>';
             }else{
                 $this->form("?editEvent&add",$name, $description, $date, $startdateRegistration, $enddateRegistration, $rating, $mailConfirm);
             }
@@ -76,14 +76,17 @@ class HandleEvents{
             $error = 0;
 
 
-            if(strlen($name) < 2){$error++;echo 'Naam moet langer zijn dan 2 tekens.<br />';}
-            if(strlen($description) < 10){$error++;echo 'Descriptie moet langer zijn dan 10 tekens.<br />';}
+            if(strlen($name) < 2){$error++;echo '<span class="error">Naam moet langer zijn dan 2 tekens.</span>';}
+            if(strlen($description) < 10){$error++;echo '<span class="error">Descriptie moet langer zijn dan 10 tekens.</span>';}
 
-            //TODO CHECK OP DATUMS
+            //CHECK OP DATUMS
+            if(strlen($startdateRegistration > $enddateRegistration )){$error++; echo '<span class="error">De start datum mag niet groter zijn als de eind datum!</span>';}
 
             if($error == 0){
                 $this->db->doquery("UPDATE {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', mail_confirm='$mailConfirm' WHERE id='$id'","events");
-                echo "Succesvol aangepast<br />";
+
+                echo '<span class="succes">Succesvol toegevoegd</span>';
+
                 $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' LIMIT 1","events");
                 $r = mysqli_fetch_array($q);
                 $this->form("?editEvent&edit=".$id,$r['name'],$r['description'],$r['event_date'],$r['startdate_registration'],$r['enddate_registration'],$r['rating'],$r['mail_confirm']);
@@ -126,14 +129,15 @@ class HandleEvents{
             </div>
 
             <label for="rating" class="headLabel">Waarderingen:</label>
-            <div id="rating">
-                <input type="radio" name="rating" value="true" id="true_rating" '.($rating ? 'checked="checked"' : "").'/> <label for="true_rating">Ja</label>
-                <input type="radio" name="rating" value="false" id="false_rating" '.(!$rating ? 'checked="checked"' : "").'/> <label for="false_rating">Nee</label>
+            <div id="rating" class="trueFalse">
+                <input type="radio" name="rating" value="1" id="true_rating" '.($rating ? 'checked="checked"' : "").'/> <label for="true_rating">Ja</label><br />
+                <input type="radio" name="rating" value="0" id="false_rating" '.(!$rating ? 'checked="checked"' : "").'/> <label for="false_rating">Nee</label>
             </div>
             <label for="mail_confirm" class="headLabel">Mail bevestiging:</label>
-            <input type="radio" name="mail_confirm" value="true" id="true_mail_confirm" '.($mailConfirm ? 'checked="checked"' : "").'/> <label for="true_mail_confirm">Ja</label>
-            <input type="radio" name="mail_confirm" value="false" id="false_mail_confirm" '.(!$mailConfirm ? 'checked="checked"' : "").'/> <label for="false_mail_confirm">Nee</label>
-            <br /><br />
+            <div id="mail_confirm" class="trueFalse">
+                <input type="radio" name="mail_confirm" value="1" id="true_mail_confirm" '.($mailConfirm ? 'checked="checked"' : "").'/> <label for="true_mail_confirm">Ja</label><br />
+                <input type="radio" name="mail_confirm" value="0" id="false_mail_confirm" '.(!$mailConfirm ? 'checked="checked"' : "").'/> <label for="false_mail_confirm">Nee</label>
+            </div>
             <input type="submit" name="add" value="Toevoegen" />
         </form>
         ';
