@@ -73,6 +73,14 @@ if(isset($_GET['logout'])){
                 }else{
                     $core->notAllowed();
                 }
+            }elseif(isset($_GET['edit'])){
+                if($user['role'] == 2) {
+                    echo '<article class="text-box">';
+                    $workshops->edit($_GET['workshops'],$_GET['edit']);
+                    echo '</article>';
+                }else{
+                    $core->notAllowed();
+                }
             }else{
                 $workshops->getWorkshops($_GET['workshops']);
             }
