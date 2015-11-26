@@ -25,28 +25,49 @@ class Workshops {
         $query = $this->db->doquery("SELECT * FROM {{table}} WHERE event='$id' ","workshops");
 
         $event_q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' ", "events");
+        $event = mysqli_fetch_array($event_q);
+
+        $maxRegEvent = $event['max_registrations'];
+        $registrations = 0;
+        while($r = mysqli_fetch_array($query)){
+            $q = $this->db->doquery("SELECT * FROM {{table}} WHERE workshop_id='".$r['id']."' AND user_id='".$this->user['id']."' ", "registrations");
+            if(mysqli_num_rows($q) > 0){
+                $registrations++;
+            }
+        }
 
         if(isset($_GET['register'])){
-            $registered_q = $this->db->doquery("SELECT * FROM {{table}} WHERE user_id='".$this->user['id']."' AND workshop_id='".$_GET['register']."' ","registrations");
+            if($registrations < $maxRegEvent){
 
-            if(mysqli_num_rows($registered_q) <= 0){
-                $this->db->doquery("INSERT INTO {{table}} SET  user_id='" . $this->user['id'] . "', workshop_id='" . $_GET['register'] . "' ", "registrations");
+                $registered_q = $this->db->doquery("SELECT * FROM {{table}} WHERE user_id='".$this->user['id']."' AND workshop_id='".$_GET['register']."' ","registrations");
+
+                if(mysqli_num_rows($registered_q) <= 0){
+                    $this->db->doquery("INSERT INTO {{table}} SET  user_id='" . $this->user['id'] . "', workshop_id='" . $_GET['register'] . "' ", "registrations");
+                    $registrations++;
+                }
             }
         }elseif(isset($_GET['unregister'])){
             $registered_q = $this->db->doquery("SELECT * FROM {{table}} WHERE user_id='".$this->user['id']."' AND workshop_id='".$_GET['unregister']."' ","registrations");
 
             if(mysqli_num_rows($registered_q) > 0){
                 $this->db->doquery("DELETE FROM {{table}} WHERE user_id='".$this->user['id']."' AND workshop_id='".$_GET['unregister']."' ","registrations");
+                $registrations--;
             }
         }
 
-        $event = mysqli_fetch_array($event_q);
         $inDate = false;
         if($event['startdate_registration'] <= date("Y-m-d") && date("Y-m-d") <=  $event['enddate_registration']){
             $inDate = true;
         }
 
+        $query = $this->db->doquery("SELECT * FROM {{table}} WHERE event='$id' ","workshops");
         while($row = mysqli_fetch_array($query)) {
+
+
+            $regs_q = $this->db->doquery("SELECT * FROM {{table}} WHERE workshop_id='".$r['id']."' ", "registrations");
+            $registrationsForThisWorkshop = mysqli_num_rows($regs_q);
+
+
             echo '<article class="text-box">';
             echo '<h2>'.$row['name'].' - '.$row['description'].'</h2>';
             echo '<div class="rightBottom">';
@@ -57,7 +78,10 @@ class Workshops {
                 if(mysqli_num_rows($registered_q) > 0){
                     echo '<a class="button" href="?workshops='.$id.'&unregister='.$row['id'].'">Afmelden</a>';
                 }else{
-                    echo '<a class="button" href="?workshops='.$id.'&register='.$row['id'].'">Aanmelden</a>';
+
+                    if($registrations < $maxRegEvent && $registrationsForThisWorkshop < $row['max_registration']) {
+                        echo '<a class="button" href="?workshops=' . $id . '&register=' . $row['id'] . '">Aanmelden</a>';
+                    }
                 }
             }else{
                 if(mysqli_num_rows($registered_q) > 0){
