@@ -66,9 +66,21 @@ if(isset($_GET['logout'])){
             require_once("includes/Workshops.php");
             $workshops = new Workshops($core,$db,$user);
             if(isset($_GET['add'])){
-                echo '<article class="text-box">';
-                $workshops->add($_GET['workshops']);
-                echo '</article>';
+                if($user['role'] == 2) {
+                    echo '<article class="text-box">';
+                    $workshops->add($_GET['workshops']);
+                    echo '</article>';
+                }else{
+                    $core->notAllowed();
+                }
+            }elseif(isset($_GET['edit'])){
+                if($user['role'] == 2) {
+                    echo '<article class="text-box">';
+                    $workshops->edit($_GET['workshops'],$_GET['edit']);
+                    echo '</article>';
+                }else{
+                    $core->notAllowed();
+                }
             }else{
                 $workshops->getWorkshops($_GET['workshops']);
             }
@@ -77,13 +89,22 @@ if(isset($_GET['logout'])){
             require_once("includes/HandleEvents.php");
             $handleEvents = new HandleEvents($core, $db);
             if(isset($_GET['add'])){
-                echo '<article class="text-box">';
-                $handleEvents->add();
-                echo '</article>';
+                if($user['role'] == 2) {
+                    echo '<article class="text-box">';
+                    $handleEvents->add();
+                    echo '</article>';
+                }else{
+                    $core->notAllowed();
+                }
             }elseif(isset($_GET['edit'])){
-                echo '<article class="text-box">';
-                $handleEvents->edit($_GET['edit']);
-                echo '</article>';
+
+                if($user['role'] == 2) {
+                    echo '<article class="text-box">';
+                    $handleEvents->edit($_GET['edit']);
+                    echo '</article>';
+                }else{
+                    $core->notAllowed();
+                }
             }else{
 
                 $query = $db->doquery("SELECT * FROM {{table}} ORDER BY event_date ","events");

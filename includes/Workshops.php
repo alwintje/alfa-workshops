@@ -25,28 +25,49 @@ class Workshops {
         $query = $this->db->doquery("SELECT * FROM {{table}} WHERE event='$id' ","workshops");
 
         $event_q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' ", "events");
+        $event = mysqli_fetch_array($event_q);
+
+        $maxRegEvent = $event['max_registrations'];
+        $registrations = 0;
+        while($r = mysqli_fetch_array($query)){
+            $q = $this->db->doquery("SELECT * FROM {{table}} WHERE workshop_id='".$r['id']."' AND user_id='".$this->user['id']."' ", "registrations");
+            if(mysqli_num_rows($q) > 0){
+                $registrations++;
+            }
+        }
 
         if(isset($_GET['register'])){
-            $registered_q = $this->db->doquery("SELECT * FROM {{table}} WHERE user_id='".$this->user['id']."' AND workshop_id='".$_GET['register']."' ","registrations");
+            if($registrations < $maxRegEvent){
 
-            if(mysqli_num_rows($registered_q) <= 0){
-                $this->db->doquery("INSERT INTO {{table}} SET  user_id='" . $this->user['id'] . "', workshop_id='" . $_GET['register'] . "' ", "registrations");
+                $registered_q = $this->db->doquery("SELECT * FROM {{table}} WHERE user_id='".$this->user['id']."' AND workshop_id='".$_GET['register']."' ","registrations");
+
+                if(mysqli_num_rows($registered_q) <= 0){
+                    $this->db->doquery("INSERT INTO {{table}} SET  user_id='" . $this->user['id'] . "', workshop_id='" . $_GET['register'] . "' ", "registrations");
+                    $registrations++;
+                }
             }
         }elseif(isset($_GET['unregister'])){
             $registered_q = $this->db->doquery("SELECT * FROM {{table}} WHERE user_id='".$this->user['id']."' AND workshop_id='".$_GET['unregister']."' ","registrations");
 
             if(mysqli_num_rows($registered_q) > 0){
                 $this->db->doquery("DELETE FROM {{table}} WHERE user_id='".$this->user['id']."' AND workshop_id='".$_GET['unregister']."' ","registrations");
+                $registrations--;
             }
         }
 
-        $event = mysqli_fetch_array($event_q);
         $inDate = false;
         if($event['startdate_registration'] <= date("Y-m-d") && date("Y-m-d") <=  $event['enddate_registration']){
             $inDate = true;
         }
 
+        $query = $this->db->doquery("SELECT * FROM {{table}} WHERE event='$id' ","workshops");
         while($row = mysqli_fetch_array($query)) {
+
+
+            $regs_q = $this->db->doquery("SELECT * FROM {{table}} WHERE workshop_id='".$r['id']."' ", "registrations");
+            $registrationsForThisWorkshop = mysqli_num_rows($regs_q);
+
+
             echo '<article class="text-box">';
             echo '<h2>'.$row['name'].' - '.$row['description'].'</h2>';
             echo '<div class="rightBottom">';
@@ -57,12 +78,18 @@ class Workshops {
                 if(mysqli_num_rows($registered_q) > 0){
                     echo '<a class="button" href="?workshops='.$id.'&unregister='.$row['id'].'">Afmelden</a>';
                 }else{
-                    echo '<a class="button" href="?workshops='.$id.'&register='.$row['id'].'">Aanmelden</a>';
+
+                    if($registrations < $maxRegEvent && $registrationsForThisWorkshop < $row['max_registration']) {
+                        echo '<a class="button" href="?workshops=' . $id . '&register=' . $row['id'] . '">Aanmelden</a>';
+                    }
                 }
             }else{
                 if(mysqli_num_rows($registered_q) > 0){
                     echo '<a class="button" href="#">Aangemeld</a>';
                 }
+            }
+            if($this->user['role'] == 2){
+                echo ' <a class="button" href="?workshops=' . $id . '&edit=' . $row['id'] . '">Aanpassen</a>';
             }
             echo '</div>';
             echo "</article>";
@@ -101,13 +128,84 @@ class Workshops {
                 $this->db->doquery("INSERT INTO {{table}} SET name='$name', description='$description', start_time='$startTime', end_time='$endTime', max_registration='$maxReg', location='$location', event='$event'","workshops");
 
                 echo '<span class="succes">Succesvol toegevoegd!</span>';
-                $this->form($event,"add");
+                $this->form($event,"add", false);
             }else{
-                $this->form($event,"add",$name, $description, $startTime, $endTime, $maxReg, $location);
+                $this->form($event,"add", false,$name, $description, $startTime, $endTime, $maxReg, $location);
             }
 
         }else{
-            $this->form($event, "add");
+            $this->form($event, "add", false);
+        }
+
+
+
+
+
+
+
+    }
+    public function edit($event,$id){
+        echo '
+        <a class="button" href="?workshops='.$event.'">Terug</a><br />';
+
+
+        if(isset($_POST['add'])){
+            $name = $this->db->esc_str($_POST['name']);
+            $description = $this->db->esc_str($_POST['description']);
+
+            $startTime = $this->db->esc_str( $_POST['start_time_hour'] ) . ":" . $this->db->esc_str( $_POST['start_time_minutes'] ) . ":00";
+            $endTime = $this->db->esc_str( $_POST['end_time_hour'] ) . ":" . $this->db->esc_str( $_POST['end_time_minutes'] ) . ":00";
+
+            $startTime = date("H:i:s", strtotime($startTime));
+            $endTime = date("H:i:s", strtotime($endTime));
+
+
+            $maxReg = $this->db->esc_str($_POST['max_reg']);
+            $location = $this->db->esc_str($_POST['location']);
+            $error = 0;
+
+            // check op name and description
+            if(strlen($name) < 2){$error++;echo '<span class="error">Naam moet langer zijn dan 2 tekens.</span>';}
+            if(strlen($description) < 10){$error++;echo '<span class="error">Descriptie moet langer zijn dan 10 tekens.</span>';}
+            if(strlen($location) < 2){$error++;echo '<span class="error">Locatie moet langer zijn dan 2 tekens.</span>';}
+
+            //CHECK OP DATUMS
+            if(strlen($startTime > $endTime )){$error++; echo '<span class="error">De start tijd mag niet hoger zijn als de eind tijd!</span>';}
+
+
+            if($error == 0){
+                $this->db->doquery("UPDATE {{table}} SET name='$name', description='$description', start_time='$startTime', end_time='$endTime', max_registration='$maxReg', location='$location', event='$event' WHERE id='$id'","workshops");
+
+                echo '<span class="succes">Succesvol toegevoegd!</span>';
+                $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' LIMIT 1","workshops");
+                $r = mysqli_fetch_array($q);
+                $this->form($event, "edit=".$id, true,$r['name'],$r['description'],$r['start_time'],$r['end_time'],$r['max_registration'],$r['location']);
+            }else{
+                $this->form($event,"edit=".$id, true,$name, $description, $startTime, $endTime, $maxReg, $location);
+            }
+
+        }else{
+            if(isset($_POST['delete'])){
+                echo '
+                <form action="?workshops='.$event.'&edit='.$id.'" method="post">
+                    Weet u het zeker? <br />
+                    <input type="submit" name="yesDelete" value="Ja" /><input type="submit" name="no" value="Nee" />
+                </form>
+                ';
+            }elseif(isset($_POST['yesDelete'])){
+
+                $this->db->doquery("DELETE FROM {{table}} WHERE workshop_id='$id'","registrations");
+                $this->db->doquery("DELETE FROM {{table}} WHERE id='$id'","workshops");
+
+
+                $this->core->loadPage("?workshops=".$event);
+
+            }else{
+                $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' LIMIT 1","workshops");
+                $r = mysqli_fetch_array($q);
+                $this->form($event, "edit=".$id, true,$r['name'],$r['description'],$r['start_time'],$r['end_time'],$r['max_registration'],$r['location']);
+            }
+            //$this->form("?editEvent&edit=".$id,$r['name'],$r['description'],$r['event_date'],$r['startdate_registration'],$r['enddate_registration'],$r['rating'],$r['mail_confirm']);
         }
 
 
@@ -118,7 +216,7 @@ class Workshops {
 
     }
 
-    public function form($event, $action, $name=false, $description=false, $startTime=false, $endTime=false,$maxReg=false, $location=false){
+    public function form($event, $action,$delete=false, $name=false, $description=false, $startTime=false, $endTime=false,$maxReg=false, $location=false){
 
         $action = "?workshops=".$event."&".$action;
         echo '
@@ -147,6 +245,7 @@ class Workshops {
             <input type="text" name="location" id="location" value="'.($location != false ? $location : "").'" /><br />
 
             <input type="submit" name="add" value="Toevoegen" />
+            '.($delete ? '<input type="submit" name="delete" value="Verwijderen" />' : "").'
         </form>
         ';
     }

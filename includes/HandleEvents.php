@@ -32,6 +32,7 @@ class HandleEvents{
 
 
             $rating = $this->db->esc_str($_POST['rating']);
+            $maxReg = $this->db->esc_str($_POST['max_registrations']);
             $mailConfirm = $this->db->esc_str($_POST['mail_confirm']);
             $error = 0;
 
@@ -44,7 +45,7 @@ class HandleEvents{
 
 
             if($error == 0){
-                $this->db->doquery("INSERT INTO {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', mail_confirm='$mailConfirm'","events");
+                $this->db->doquery("INSERT INTO {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', max_registrations='$maxReg', mail_confirm='$mailConfirm'","events");
 
                 echo '<span class="succes">Succesvol toegevoegd!</span>';
                 $this->form("?editEvent&add");
@@ -73,6 +74,7 @@ class HandleEvents{
 
 
             $rating = $this->db->esc_str($_POST['rating']);
+            $maxReg = $this->db->esc_str($_POST['max_registrations']);
             $mailConfirm = $this->db->esc_str($_POST['mail_confirm']);
             $error = 0;
 
@@ -84,7 +86,7 @@ class HandleEvents{
             if(strlen($startdateRegistration > $enddateRegistration )){$error++; echo '<span class="error">De start datum mag niet groter zijn als de eind datum!</span>';}
 
             if($error == 0){
-                $this->db->doquery("UPDATE {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', mail_confirm='$mailConfirm' WHERE id='$id'","events");
+                $this->db->doquery("UPDATE {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', max_registrations='$maxReg', mail_confirm='$mailConfirm' WHERE id='$id'","events");
 
                 echo '<span class="succes">Succesvol toegevoegd!</span>';
 
@@ -128,7 +130,19 @@ class HandleEvents{
                 '. $this->core->getMonth("enddate_registration",($enddateReg != false ? $enddateReg : false)) .'
                 '. $this->core->getYear("enddate_registration",($enddateReg != false ? $enddateReg : false)) .'
             </div>
-
+            <label for="max_registrations" class="headLabel">Maximaal aantal aanmeldingen per gebruiker</label>
+            <select name="max_registrations" id="max_registrations">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
             <label for="rating" class="headLabel">Waarderingen:</label>
             <div id="rating" class="trueFalse">
                 <input type="radio" name="rating" value="1" id="true_rating" '.($rating ? 'checked="checked"' : "").'/> <label for="true_rating">Ja</label><br />
@@ -222,3 +236,5 @@ class HandleEvents{
 
  */
 ?>
+
+

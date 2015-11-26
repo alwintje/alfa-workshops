@@ -27,7 +27,14 @@ class Core{
     ';
         }
     }
+    public function notAllowed(){
 
+        echo '
+        <article class="text-box">
+            <span class="error">U hebt niet de juiste rechten om deze pagina te bekijken.</span>
+        </article>
+        ';
+    }
     public function getDay($name,$date=false){
         return '
             <select name="'.$name.'_day" id="form_'.$name.'_day">
