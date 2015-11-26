@@ -66,7 +66,9 @@ if(isset($_GET['logout'])){
             require_once("includes/Workshops.php");
             $workshops = new Workshops($core,$db,$user);
             if(isset($_GET['add'])){
+                echo '<article class="text-box">';
                 $workshops->add($_GET['workshops']);
+                echo '</article>';
             }else{
                 $workshops->getWorkshops($_GET['workshops']);
             }
@@ -95,16 +97,16 @@ if(isset($_GET['logout'])){
                         <?php
                         if($row['startdate_registration'] <= date("Y-m-d") && date("Y-m-d") <=  $row['enddate_registration']){
                             ?>
-                            <a href="?workshops=<?php echo $row['id']; ?>">Aanmelden</a>
+                            <a class="button" href="?workshops=<?php echo $row['id']; ?>">Aanmelden</a>
                             <?php
                         }else{
                             ?>
-                            <a href="?workshops=<?php echo $row['id']; ?>">Bekijken</a>
+                            <a class="button" href="?workshops=<?php echo $row['id']; ?>">Bekijken</a>
                             <?php
                         }
 
                         if($user['role'] == 2){
-                            echo '<a href="?edit='.$row['id'].'">Aanpassen</a>';
+                            echo '<a class="button" href="?edit='.$row['id'].'">Aanpassen</a>';
                         }
                         ?>
                         </div>

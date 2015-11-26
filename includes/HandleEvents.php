@@ -40,13 +40,14 @@ class HandleEvents{
             if(strlen($description) < 10){$error++;echo '<span class="error">Descriptie moet langer zijn dan 10 tekens.</span>';}
 
             //CHECK OP DATUMS
-            if(strlen($startdateRegistration > $enddateRegistration )){$error++; echo "De start datum mag niet groter zijn als de eind datum!</span>";}
+            if(strlen($startdateRegistration > $enddateRegistration )){$error++; echo '<span class="error">De start datum mag niet groter zijn als de eind datum!</span>';}
 
 
             if($error == 0){
                 $this->db->doquery("INSERT INTO {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', mail_confirm='$mailConfirm'","events");
+
+                echo '<span class="succes">Succesvol toegevoegd!</span>';
                 $this->form("?editEvent&add");
-                echo '<span class="succes">Succesvol toegevoegd</span>';
             }else{
                 $this->form("?editEvent&add",$name, $description, $date, $startdateRegistration, $enddateRegistration, $rating, $mailConfirm);
             }
@@ -85,7 +86,7 @@ class HandleEvents{
             if($error == 0){
                 $this->db->doquery("UPDATE {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', mail_confirm='$mailConfirm' WHERE id='$id'","events");
 
-                echo '<span class="succes">Succesvol toegevoegd</span>';
+                echo '<span class="succes">Succesvol toegevoegd!</span>';
 
                 $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' LIMIT 1","events");
                 $r = mysqli_fetch_array($q);
