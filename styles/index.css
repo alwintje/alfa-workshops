@@ -79,6 +79,7 @@
 }
 
 .text-box{
+    background: #fff;
     margin-top: 40px;
     height: auto;
     min-height: 200px;

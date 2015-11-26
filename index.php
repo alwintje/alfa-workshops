@@ -142,4 +142,8 @@ if(isset($_GET['logout'])){
         $core->checkLoad();
     ?>
 </body>
+
+<footer class="footer">
+
+</footer>
 </html>
