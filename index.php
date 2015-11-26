@@ -31,6 +31,7 @@ if(isset($_GET['logout'])){
     <div class="header">
         <div class="header-text">
             <h1>Alfa-college</h1>
+            <h2>Created by Alwin & Yaron</h2>
         </div>
         <div class="menu">
             <a class="logout" href="?logout">Uitloggen</a>
