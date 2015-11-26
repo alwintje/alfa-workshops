@@ -31,7 +31,7 @@ if(isset($_GET['logout'])){
 <div class="header">
     <img src="img/alfa-college.png" />
 </div>
-<div class="menu">ik bnnoelle
+<div class="menu">
     <ul>
         <li>
             <a href="#home">Home</a>

@@ -22,7 +22,6 @@ if(isset($_GET['logout'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Alfa workshops</title>
     <link rel="stylesheet" type="text/css" href="styles/index.css" />
     <link rel="stylesheet" type="text/css" href="styles/base.css" />
@@ -30,34 +29,35 @@ if(isset($_GET['logout'])){
 </head>
 <body>
     <div class="header">
-        <img src="img/alfa-college.png" />
-    </div>
-    <div class="menu">
-        <ul>
-            <li>
-                <a href="?">Evenementen</a>
-            </li>
-            <?php
-            if($user['role'] == 2){
-                if(isset($_GET['workshops'])){
-                    echo '
-                        <li>
-                            <a href="?workshops='.$_GET['workshops'].'&add">Workshop toevoegen</a>
-                        </li>
-                    ';
-                }else {
-                    echo '
-                        <li>
-                            <a href="?add">Evenementen toevoegen</a>
-                        </li>
-                    ';
+        <div class="header-text">
+            <h1>Alfa-college</h1>
+        </div>
+        <div class="menu">
+            <a class="logout" href="?logout">Uitloggen</a>
+            <img src="img/alfa-college.png" />
+            <ul>
+                <li>
+                    <a href="?">Evenementen</a>
+                </li>
+                <?php
+                if($user['role'] == 2){
+                    if(isset($_GET['workshops'])){
+                        echo '
+                            <li>
+                                <a href="?workshops='.$_GET['workshops'].'&add">Workshop toevoegen</a>
+                            </li>
+                        ';
+                    }else {
+                        echo '
+                            <li>
+                                <a href="?add">Evenementen toevoegen</a>
+                            </li>
+                        ';
+                    }
                 }
-            }
-            ?>
-            <li>
-                <a href="?logout">Loguit</a>
-            </li>
-        </ul>
+                ?>
+            </ul>
+        </div>
     </div>
     <section class="events">
         <?php

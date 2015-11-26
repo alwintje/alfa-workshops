@@ -1,31 +1,45 @@
 .header{
     width: 100%;
-    height: 50px;
-    padding: 10px 0;
+    height: 500px;
+    background: url('../img/header.jpg') no-repeat;
+    background-position: center right;
+    background-size: cover;
+    border-bottom: 2px solid #000;
 }
-
-.header img{
-    margin-left: 20%;
-}
-.menu{
-    height: 30px;
+.header-text{
+    position: absolute;
     width: 100%;
-    background: #DE0000;
+    top: 25%;
+}
+.header-text h1{
+    font-size: 60px;
     color: #fff;
-    font-size: 21px;
+    text-align: center;
     cursor: default;
 }
 
-.menu ul{
-    margin-left: 20%;
-    display: inline-block;
+.menu{
+    width: 100%;
+    height: 60px;
+    background-color: rgba(0,0,0,0.9);
+    position: fixed;
+    font-size: 21px;
+    cursor: default;
+    color: #fff;
+    z-index: 10;
 }
 
+.menu ul{
+    position: absolute;
+    display: inline-block;
+    left: 20%;
+}
 .menu li{
     display: inline-block;
-    padding: 0 20px 0 0;
+    padding: 15px 20px 0 0;
 
 }
+
 .menu li a{
     color: #FFF;
     text-decoration: none;
@@ -37,13 +51,27 @@
 }
 .menu li a:hover{
     cursor: pointer;
-    color: #333;
+    color: #c6c6c6;
     -webkit-transition: 0ms;
     -moz-transition: 0ms;
     -ms-transition: 0ms;
     -o-transition: 0ms;
     transition: 0ms;
 }
+
+.menu img{
+    position: absolute;
+    right: 30px;
+}
+
+.logout{
+    position: absolute;
+    font-size: 18px;
+    color: #fff;
+    text-decoration: none;
+    padding: 15px 0 0 5px;
+}
+
 
 .events{
     width: 60%;
