@@ -10,21 +10,35 @@
     width: 100%;
     height: auto;
     top: 25%;
-    background-color: rgba(0,0,0,0.5);
-    border-bottom: 2px solid #000;
-    border-top: 1px solid #000;
+    /*background-color: rgba(0,0,0,0.5);*/
+    /*border-bottom: 2px solid #000;*/
+    /*border-top: 1px solid #000;*/
     text-align: center;
 }
 .header-text h1{
     font-size: 60px;
     color: #fff;
     cursor: default;
+    text-shadow: 2px 2px #000;
+    margin-bottom: 50px;
 }
 
 .header-text a{
     font-size: 23px;
     color: #fff;
     text-decoration: none;
+    border: 2px solid #003681;
+    padding: 5px;
+    background-color: rgba(0,0,0,0.6);
+    -webkit-transition: 300ms ;
+    -moz-transition: 300ms ;
+    -ms-transition: 300ms ;
+    -o-transition: 300ms ;
+    transition: 300ms ;
+}
+
+.header-text a:hover{
+    background-color: rgba(0,0,0,0.9);
 }
 
 .header-text h2{
