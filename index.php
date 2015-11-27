@@ -25,6 +25,7 @@ if(isset($_GET['logout'])){
     <title>Alfa workshops</title>
     <link rel="stylesheet" type="text/css" href="styles/index.css" />
     <link rel="stylesheet" type="text/css" href="styles/base.css" />
+    <link rel="stylesheet" type="text/css" href="styles/font-awesome.css" />
 
 </head>
 <body>
@@ -32,6 +33,8 @@ if(isset($_GET['logout'])){
         <div class="header-text">
             <h1>Alfa-college workshops</h1>
             <h2>Created by Alwin & Yaron</h2>
+
+            <a href="#events">Evenementen</a>
         </div>
         <div class="menu">
             <a class="logout" href="?logout">Uitloggen</a>
@@ -60,7 +63,7 @@ if(isset($_GET['logout'])){
             </ul>
         </div>
     </div>
-    <section class="events">
+    <section class="events" id="events">
         <?php
         if(isset($_GET['workshops'])){
 
