@@ -9,23 +9,21 @@
     position: absolute;
     width: 100%;
     top: 25%;
+    background-color: rgba(0,0,0,0.7);
+    border-bottom: 2px solid #000;
+    border-top: 1px solid #000;
 }
 .header-text h1{
     font-size: 60px;
-    color: #003681;
+    color: #fff;
     text-align: center;
     cursor: default;
 }
 
-.header-text .red{
-    color: #DE0000;
-    display: inline;
-}
-
 .header-text h2{
-    font-size: 30px;
+    font-size: 25px;
     text-align: center;
-    color: #fff;
+    color: #00A2F4;
     font-style: italic;
 }
 
