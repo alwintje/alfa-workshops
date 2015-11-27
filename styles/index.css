@@ -10,7 +10,7 @@
     width: 100%;
     height: auto;
     top: 25%;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.5);
     border-bottom: 2px solid #000;
     border-top: 1px solid #000;
     text-align: center;
@@ -36,7 +36,7 @@
 .menu{
     width: 100%;
     height: 50px;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0,0,0,0.7);
     position: fixed;
     font-size: 18px;
     cursor: default;
