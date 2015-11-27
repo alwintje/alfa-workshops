@@ -30,7 +30,7 @@ if(isset($_GET['logout'])){
 <body>
     <div class="header">
         <div class="header-text">
-            <h1>Alfa-college</h1>
+            <h1><nav class="red">Alfa</nav>-college</h1>
             <h2>Created by Alwin & Yaron</h2>
         </div>
         <div class="menu">

@@ -12,9 +12,14 @@
 }
 .header-text h1{
     font-size: 60px;
-    color: #fff;
+    color: #003681;
     text-align: center;
     cursor: default;
+}
+
+.header-text .red{
+    color: #DE0000;
+    display: inline;
 }
 
 .header-text h2{
