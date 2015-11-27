@@ -56,6 +56,9 @@ if(isset($_GET['logout'])){
                             <li>
                                 <a href="?add">Evenementen toevoegen</a>
                             </li>
+                            <li>
+                                <a href="?users">Gebruikers beheren</a>
+                            </li>
                         ';
                     }
                 }
@@ -87,6 +90,22 @@ if(isset($_GET['logout'])){
                 }
             }else{
                 $workshops->getWorkshops($_GET['workshops']);
+            }
+
+        }elseif(isset($_GET['users'])){
+
+            require_once("includes/Users.php");
+            $users = new Users($core,$db,$user);
+            if(isset($_GET['edit'])){
+                if($user['role'] == 2) {
+                    echo '<article class="text-box">';
+                    $users->edit($_GET['edit']);
+                    echo '</article>';
+                }else{
+                    $core->notAllowed();
+                }
+            }else{
+                $users->getAll();
             }
 
         }else{
