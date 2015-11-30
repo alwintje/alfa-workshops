@@ -97,7 +97,7 @@ if(isset($_GET['logout'])){
         }elseif(isset($_GET['users'])){
 
             require_once("includes/Users.php");
-            $users = new Users($core,$db,$user);
+            $users = new Users($core,$db,$user,$security);
             if(isset($_GET['edit'])){
                 if($user['role'] == 2) {
                     echo '<article class="text-box">';

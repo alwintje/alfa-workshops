@@ -10,12 +10,14 @@ class Users{
     private $db;
     private $core;
     private $user;
+    private $security;
 
 
-    public function __construct(Core $core, Database $db, $user){
+    public function __construct(Core $core, Database $db, $user, Security $security){
         $this->db = $db;
         $this->core = $core;
         $this->user = $user;
+        $this->security = $security;
     }
     public function getAll(){ // Krijg alle gebruikers
         $q = $this->db->doquery("SELECT * FROM {{table}}","users");
@@ -25,40 +27,57 @@ class Users{
             echo '</a><br />';
         }
     }
-    public function edit($id, $action){ // ID van gebruiker
-        $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' ","users");
-        $row = mysqli_fetch_array($q);
-//        $action = "?user&edit=$id";
+    public function edit($id){ // ID van gebruiker
 
-        echo '<form action="'.$action.'" method="post">
-            <label>Voornaam: </label>
-            <input value= '.$row['firstname'].'> </input> <br />
-            <label>Achternaam: </label>
-            <input value= '.$row['lastname'].'> </input> <br />
-            <label>Email: </label>
-            <input value= '.$row['email'].'> </input> <br />
-            <label>Gebruikerslevel:</label>
-            <select>
-                <option value='.$row['role'].'> </option>
-            </select>
-            <label>
-            <button type="submit" name="submit">Verander</button>
-        </form>
-        ';
+        if(isset($_POST['edit'])){
+            $firstname = $this->db->esc_str($_POST['firstname']);
+            $lastname = $this->db->esc_str($_POST['lastname']);
+            $email = $this->db->esc_str($_POST['email']);
+            $role = $this->db->esc_str($_POST['role']);
 
-        if(isset($_POST['submit'])){
-            $error = 0;
-            $firstName = $this->db->esc_str(isset($_POST['firstname']));
-            $lastName = $this->db->esc_str(isset($_POST['lastname']));
-            $email = $this->db->esc_str(isset($_POST['email']));
-            $role = $this->db->esc_str(isset($_POST['role']));
+            $correctMail = $this->security->isEmail($email);
 
-            if($error == 0){
-                $this->db->doquery("UPDATE {{table}} SET firstname='$firstName', lastname='$lastName', email='$email', role='$role' WHERE id='$id'","users");
-                echo "succes";
+            $err = [];
+            if($correctMail != null){
+                $err[] = $correctMail;
+            }
+            if(strlen($firstname) < 2){$err[] = "Voornaam is niet lang genoeg.";}
+            if(strlen($lastname) < 2){$err[] = "Achternaam is niet lang genoeg.";}
+
+
+            if(count($err) == 0){
+                $this->db->doquery("UPDATE {{table}} SET firstname='$firstname', lastname='$lastname', email='$email', role='$role' WHERE id='$id'","users");
+                echo "Succesvol aangepast";
+            }else{
+                foreach($err as $error){
+                    echo $error."<br />";
+                }
             }
 
         }
+
+
+        $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' ","users");
+        $row = mysqli_fetch_array($q);
+        echo '
+
+        <form action="?users&edit='.$id.'" method="post">
+            <label class="headLabel">Voornaam: </label>
+            <input value= '.$row['firstname'].' name="firstname" /> <br />
+            <label class="headLabel">Achternaam: </label>
+            <input value= '.$row['lastname'].' name="lastname" /> <br />
+            <label class="headLabel">Email: </label>
+            <input value= '.$row['email'].' name="email" />  <br />
+            <label for="roles" class="headLabel">Gebruikerslevel:</label>
+            <div id="roles" class="trueFalse">
+                <input type="radio" name="role" value="0" id="role_zero" '.($row['role'] == 0 ? 'checked="checked"' : "").'/> <label for="role_zero">Gebruiker</label><br />
+                <input type="radio" name="role" value="2" id="role_two" '.($row['role'] == 2 ? 'checked="checked"' : "").'/> <label for="role_two">Administrator</label>
+            </div>
+            <label>
+            <button type="submit" name="edit">Aanpassen</button>
+        </form>
+
+        ';
     }
 
 
