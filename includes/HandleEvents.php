@@ -33,7 +33,7 @@ class HandleEvents{
         if($this->user['role'] == 2){
             $query = $this->db->doquery("SELECT * FROM {{table}} WHERE $monthQuery ORDER BY event_date","events");
         }else{
-            $query = $this->db->doquery("SELECT * FROM {{table}} WHERE $monthQuery AND active='true' ORDER BY event_date","events");
+            $query = $this->db->doquery("SELECT * FROM {{table}} WHERE $monthQuery AND active='1' ORDER BY event_date","events");
         }
         echo '
             <article class="filter">
