@@ -23,27 +23,27 @@ class HandleEvents{
         echo '
             <article class="filter">
                 <ul>
-                    <li data-filet="">Januari</li>
-                    <li data-filet="">Februari</li>
-                    <li data-filet="">Maart</li>
-                    <li data-filet="">April</li>
-                    <li data-filet="">Mei</li>
-                    <li data-filet="">Juni</li>
-                    <li data-filet="">Juli</li>
-                    <li data-filet="">Augustus</li>
-                    <li data-filet="">September</li>
-                    <li data-filet="">Oktober</li>
-                    <li data-filet="">November</li>
-                    <li data-filet="">December</li>
+                    <li data-filter="Jan">Januari</li>
+                    <li data-filter="Feb">Februari</li>
+                    <li data-filter="Mar">Maart</li>
+                    <li data-filter="Apr">April</li>
+                    <li data-filter="May">Mei</li>
+                    <li data-filter="Jun">Juni</li>
+                    <li data-filter="Jul">Juli</li>
+                    <li data-filter="Aug">Augustus</li>
+                    <li data-filter="Sep">September</li>
+                    <li data-filter="Oct">Oktober</li>
+                    <li data-filter="Nov">November</li>
+                    <li data-filter="Dec">December</li>
                 </ul>
             </article>
             ';
 
         while($row = mysqli_fetch_array($query)){
             //
-            $month = date("n", strtotime($row['startdate_registration']));
+            $month = date("M", strtotime($row['event_date']));
             echo '
-            <article class="text-box ">
+            <article class="text-box '.$month.'">
                 <h1>'.$row['event_date'].'</h1>
                 <h2>'.$row['name'].'</h2>
                 <p> '.$row['description'].' </p>
