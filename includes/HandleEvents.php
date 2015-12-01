@@ -67,7 +67,7 @@ class HandleEvents{
             ';
 
         while($row = mysqli_fetch_array($query)){
-            a
+
             $month = date("M", strtotime($row['event_date']));
             echo '
             <article class="text-box '.$month.' '.($row['active'] ? "" : "not-active").'">
