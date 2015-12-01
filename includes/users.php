@@ -22,9 +22,13 @@ class Users{
     public function getAll(){ // Krijg alle gebruikers
         $q = $this->db->doquery("SELECT * FROM {{table}}","users");
         while($row = mysqli_fetch_array($q)){
-            echo '<a href="?users&edit='.$row['id'].'">';
-            echo $row['firstname']." ".$row['lastname'];
-            echo '</a><br />';
+
+            echo '<article class="text-box">';
+            echo "Naam: ".$row['firstname']." ".$row['lastname']."<br/>";
+            echo "Email: ".$row['email'];
+            echo '<br />';
+            echo '<a class="edituser" href="?users&edit='.$row['id'].'">Wijzigen</>  ';
+            echo '</article>';
         }
     }
     public function edit($id){ // ID van gebruiker

@@ -64,6 +64,7 @@ class HandleEvents{
                     </li>
                 </ul>
             </article>
+
             ';
 
         while($row = mysqli_fetch_array($query)){
@@ -155,7 +156,6 @@ class HandleEvents{
             $mailConfirm = $this->db->esc_str($_POST['mail_confirm']);
             $active = $this->db->esc_str($_POST['active']);
             $error = 0;
-
 
             if(strlen($name) < 2){$error++;echo '<span class="error">Naam moet langer zijn dan 2 tekens.</span>';}
             if(strlen($description) < 10){$error++;echo '<span class="error">Descriptie moet langer zijn dan 10 tekens.</span>';}

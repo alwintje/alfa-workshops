@@ -35,7 +35,7 @@ if(isset($_GET['logout'])){
         <div class="header-text">
             <h1>Alfa-college workshops</h1>
 <!--            <h2>Created by Alwin & Yaron </h2>-->
-            <a target="events" id="button"> evenementen bekijken <i class="fa fa-arrow-down"></i> </a>
+            <a target="events" id="button"> Evenementen <i class="fa fa-arrow-down"></i> </a>
         </div>
         <div class="menu">
             <a class="logout" href="?logout">Uitloggen</a>
