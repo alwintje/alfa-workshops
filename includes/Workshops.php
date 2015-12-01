@@ -6,7 +6,15 @@
  * Time: 15:03
  */
 
-
+//$registered_users = $this->db->doquery("SELECT * FROM {{table}} WHERE workshop_id='".$r['id']."' AND user_id='".$this->user['id']."' ", "registrations");
+//if(mysqli_num_rows($registered_users) > 1){
+//    while($row = mysqli_fetch_array($registered_users)){
+//        echo $row['firstname']. "</br>";
+//        echo $row['lastname'];
+//    }
+//}else{
+//    echo "Niemand heeft zich nog aangemeld voor deze workshop!";
+//}
 class Workshops {
 
     private $db;
@@ -35,7 +43,6 @@ class Workshops {
                 $registrations++;
             }
         }
-
         if(isset($_GET['register'])){
             if($registrations < $maxRegEvent){
 
@@ -54,7 +61,6 @@ class Workshops {
                 $registrations--;
             }
         }
-
         $inDate = false;
         if($event['startdate_registration'] <= date("Y-m-d") && date("Y-m-d") <=  $event['enddate_registration']){
             $inDate = true;
@@ -72,14 +78,11 @@ class Workshops {
             echo '<h2>'.$row['name'].' - '.$row['description'].'</h2>';
             echo '<div class="rightBottom">';
             $registered_q = $this->db->doquery("SELECT * FROM {{table}} WHERE user_id='".$this->user['id']."' AND workshop_id='".$row['id']."' ","registrations");
-
             if($inDate){
-
                 if(mysqli_num_rows($registered_q) > 0){
                     echo '<a class="button" href="?workshops='.$id.'&unregister='.$row['id'].'">Afmelden</a>';
                 }else{
-
-                    if($registrations < $maxRegEvent && $registrationsForThisWorkshop < $row['max_registration']) {
+                    if ($registrations < $maxRegEvent && $registrationsForThisWorkshop < $row['max_registration']) {
                         echo '<a class="button" href="?workshops=' . $id . '&register=' . $row['id'] . '">Aanmelden</a>';
                     }
                 }
