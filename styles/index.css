@@ -62,11 +62,29 @@
 /*.header-text a:hover{*/
     /*/!*background-color: rgba(0,0,0,0.9);*!/*/
 /*}*/
+.header h2::before{
 
-.header-text h2{
+    content: '\00a9  Yaron Lambers en Alwin Kroesen';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 25px;
+    font-style: italic;
+
+}
+.header h2{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    padding: 5px;
     font-size: 25px;
     color: #00A2F4;
+    /*color: #000;*/
     font-style: italic;
+    background: rgba(0,0,0,0.5);
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
 }
 
 .menu{

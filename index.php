@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require_once("includes/Core.php");
 require_once("includes/Database.php");
 require_once("includes/Security.php");
@@ -31,6 +30,7 @@ if(isset($_GET['logout'])){
     <script src="js/index.js"></script>
 
     <?php
+
         if(count($_GET) > 0){
             echo '
             <style>
@@ -46,38 +46,26 @@ if(isset($_GET['logout'])){
     ?>
 </head>
 <body>
-    <div class="header">
-        <div class="header-text">
-            <h1>Alfa-college workshops</h1>
-<!--            <h2>Created by Alwin & Yaron </h2>-->
-            <button id="button">Evenementen <i class="fa fa-arrow-down"></i> </button>
-        </div>
-        <div class="menu">
-            <a class="logout" href="?logout">Uitloggen</a>
-            <img src="img/alfa-college.png" />
-            <ul>
-                <li>
-                    <a href="?">Evenementen</a>
-                </li>
                 <?php
-                if($user['role'] == 2){
-                    if(isset($_GET['workshops'])){
-                        echo '
-                            <li>
-                                <a href="?workshops='.$_GET['workshops'].'&add">Workshop toevoegen</a>
-                            </li>
-                        ';
-                    }else {
-                        echo '
-                            <li>
-                                <a href="?add">Evenementen toevoegen</a>
-                            </li>
-                            <li>
-                                <a href="?users">Gebruikers beheren</a>
-                            </li>
-                        ';
+                    echo base64_decode("DQogICAgPGRpdiBjbGFzcz0iaGVhZGVyIj4NCiAgICAgICAgPGRpdiBjbGFzcz0iaGVhZGVyLXRleHQiPg0KICAgICAgICAgICAgPGgxPkFsZmEtY29sbGVnZSB3b3Jrc2hvcHM8L2gxPg0KICAgICAgICAgICAgPGJ1dHRvbiBpZD0iYnV0dG9uIj5FdmVuZW1lbnRlbiA8aSBjbGFzcz0iZmEgZmEtYXJyb3ctZG93biI+PC9pPiA8L2J1dHRvbj4NCiAgICAgICAgPC9kaXY+DQogICAgICAgIDxoMj4mY29weTsgWWFyb24gTGFtYmVycyBlbiBBbHdpbiBLcm9lc2VuPC9oMj4NCiAgICAgICAgPGRpdiBjbGFzcz0ibWVudSI+DQogICAgICAgICAgICA8YSBjbGFzcz0ibG9nb3V0IiBocmVmPSI/bG9nb3V0Ij5VaXRsb2dnZW48L2E+DQogICAgICAgICAgICA8aW1nIHNyYz0iaW1nL2FsZmEtY29sbGVnZS5wbmciIC8+DQogICAgICAgICAgICA8dWw+DQogICAgICAgICAgICAgICAgPGxpPg0KICAgICAgICAgICAgICAgICAgICA8YSBocmVmPSI/Ij5FdmVuZW1lbnRlbjwvYT4NCiAgICAgICAgICAgICAgICA8L2xpPg==");
+                    if($user['role'] == 2){
+                        if(isset($_GET['workshops'])){
+                            echo '
+                                <li>
+                                    <a href="?workshops='.$_GET['workshops'].'&add">Workshop toevoegen</a>
+                                </li>
+                            ';
+                        }else {
+                            echo '
+                                <li>
+                                    <a href="?add">Evenementen toevoegen</a>
+                                </li>
+                                <li>
+                                    <a href="?users">Gebruikers beheren</a>
+                                </li>
+                            ';
+                        }
                     }
-                }
                 ?>
             </ul>
         </div>
@@ -158,6 +146,5 @@ if(isset($_GET['logout'])){
 </body>
 
 <footer class="footer">
-
 </footer>
 </html>

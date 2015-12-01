@@ -14,6 +14,9 @@ $(document).scroll(function(){
     var padding = 15 - $(this).scrollTop() / 20;
     padding = padding < 3 ? 3 : padding;
     $(".menu").css({padding: padding+"px 0"});
+    if(document.querySelector(".header h2") == undefined){
+        alert("Deze website is gemaakt door Yaron Lambers en Alwin Kroesen");
+    }
 });
 
 function scrollToContent(speed){

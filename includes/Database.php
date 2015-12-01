@@ -27,6 +27,7 @@ class Database{
             echo "Failed to connect to MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
         }
         //mysql_set_charset('utf8',$mysqli);
+
         return $this->mysqli;
 
     }
