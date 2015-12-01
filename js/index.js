@@ -1,8 +1,12 @@
 /**
  * Created by Yaron on 27-11-2015.
  */
-$('#button').click(function() {
-    $('body').animate({
-        scrollTop: eval($('#' + $(this).attr('target')).offset().top - 70)
-    }, 1000);
+$(document).ready(function(){
+
+    $('#button').click(function() {
+
+        $("body, html").animate({
+            scrollTop: eval($('#events').offset().top - 100)
+        }, 1000);
+    });
 });

@@ -111,7 +111,7 @@ if(isset($_GET['logout'])){
 
         }else{
             require_once("includes/HandleEvents.php");
-            $handleEvents = new HandleEvents($core, $db);
+            $handleEvents = new HandleEvents($core, $db, $user);
             if(isset($_GET['add'])){
                 if($user['role'] == 2) {
                     echo '<article class="text-box">';
@@ -130,34 +130,9 @@ if(isset($_GET['logout'])){
                     $core->notAllowed();
                 }
             }else{
+                $handleEvents->getAll();
 
-                $query = $db->doquery("SELECT * FROM {{table}} ORDER BY event_date ","events");
-                while($row = mysqli_fetch_array($query)){
-                    ?>
-                    <article class="text-box">
-                        <h1><?php echo $row['event_date']; ?></h1>
-                        <h2><?php echo $row['name']; ?></h2>
-                        <p> <?php echo $row['description']; ?> </p>
-                        <div class="rightBottom">
-                        <?php
-                        if($row['startdate_registration'] <= date("Y-m-d") && date("Y-m-d") <=  $row['enddate_registration']){
-                            ?>
-                            <a class="button" href="?workshops=<?php echo $row['id']; ?>">Aanmelden</a>
-                            <?php
-                        }else{
-                            ?>
-                            <a class="button" href="?workshops=<?php echo $row['id']; ?>">Bekijken</a>
-                            <?php
-                        }
 
-                        if($user['role'] == 2){
-                            echo '<a class="button" href="?edit='.$row['id'].'">Aanpassen</a>';
-                        }
-                        ?>
-                        </div>
-                    </article>
-                    <?php
-                }
             }
         }
         ?>

@@ -9,11 +9,60 @@ class HandleEvents{
 
     private $db;
     private $core;
+    private $user;
 
 
-    public function __construct(Core $core, Database $db){
+    public function __construct(Core $core, Database $db, $user){
         $this->db = $db;
         $this->core = $core;
+        $this->user = $user;
+    }
+    public function getAll(){
+
+        $query = $this->db->doquery("SELECT * FROM {{table}} ORDER BY event_date ","events");
+        echo '
+            <article class="filter">
+                <ul>
+                    <li data-filet="">Januari</li>
+                    <li data-filet="">Februari</li>
+                    <li data-filet="">Maart</li>
+                    <li data-filet="">April</li>
+                    <li data-filet="">Mei</li>
+                    <li data-filet="">Juni</li>
+                    <li data-filet="">Juli</li>
+                    <li data-filet="">Augustus</li>
+                    <li data-filet="">September</li>
+                    <li data-filet="">Oktober</li>
+                    <li data-filet="">November</li>
+                    <li data-filet="">December</li>
+                </ul>
+            </article>
+            ';
+
+        while($row = mysqli_fetch_array($query)){
+            //
+            $month = date("n", strtotime($row['startdate_registration']));
+            echo '
+            <article class="text-box ">
+                <h1>'.$row['event_date'].'</h1>
+                <h2>'.$row['name'].'</h2>
+                <p> '.$row['description'].' </p>
+                <div class="rightBottom">
+            ';
+                if($row['startdate_registration'] <= date("Y-m-d") && date("Y-m-d") <= $row['enddate_registration']){
+                    echo ' <a class="button" href="?workshops='.$row['id'].'">Aanmelden</a>';
+                }else{
+                    echo ' <a class="button" href="?workshops='.$row['id'].'">Bekijken</a>';
+                }
+
+                if($this->user['role'] == 2){
+                    echo ' <a class="button" href="?edit='.$row['id'].'">Aanpassen</a>';
+                }
+            echo '
+                </div>
+            </article>
+            ';
+        }
     }
     public function add(){
 
