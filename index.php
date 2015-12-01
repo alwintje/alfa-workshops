@@ -26,7 +26,7 @@ if(isset($_GET['logout'])){
     <link rel="stylesheet" type="text/css" href="styles/index.css" />
     <link rel="stylesheet" type="text/css" href="styles/base.css" />
     <link rel="stylesheet" type="text/css" href="styles/font-awesome.css" />
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="js/index.js"></script>
 
 </head>
@@ -35,8 +35,7 @@ if(isset($_GET['logout'])){
         <div class="header-text">
             <h1>Alfa-college workshops</h1>
 <!--            <h2>Created by Alwin & Yaron </h2>-->
-<!---->
-            <a href="#events"> evenementen bekijken <i class="fa fa-arrow-down"></i> </a>
+            <a target="events" id="button"> evenementen bekijken <i class="fa fa-arrow-down"></i> </a>
         </div>
         <div class="menu">
             <a class="logout" href="?logout">Uitloggen</a>
