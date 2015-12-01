@@ -30,13 +30,27 @@ if(isset($_GET['logout'])){
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="js/index.js"></script>
 
+    <?php
+        if(count($_GET) > 0){
+            echo '
+            <style>
+                .header{
+                    height: 300px;
+                }
+                .header #button{
+                    display: none;
+                }
+            </style>
+            ';
+        }
+    ?>
 </head>
 <body>
     <div class="header">
         <div class="header-text">
             <h1>Alfa-college workshops</h1>
 <!--            <h2>Created by Alwin & Yaron </h2>-->
-            <a target="events" id="button"> Evenementen <i class="fa fa-arrow-down"></i> </a>
+            <button id="button">Evenementen <i class="fa fa-arrow-down"></i> </button>
         </div>
         <div class="menu">
             <a class="logout" href="?logout">Uitloggen</a>

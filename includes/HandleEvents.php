@@ -18,19 +18,31 @@ class HandleEvents{
         $this->user = $user;
     }
     public function getAll(){
+        $monthsSmall = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        $months = ['January','February','March','April','May','June','July ','August','September','October','November','December'];
+        $monthQuery = "";
+        $monthStart = date("Y/m/d");
+        $monthEnd = date("Y/m/d", strtotime(date("Y-M-d")) + 2592000);
+        if(isset($_GET['month'])) {
+            $month = $months[array_search($_GET['month'], $monthsSmall)];
+            $monthStart = date("Y/m/d", strtotime(date("Y") . " " . $month));
+            $monthEnd = date("Y/m/d", strtotime(date("Y") . " " . $month) + 2592000);
+        }
+        $monthQuery = "event_date >= '$monthStart 00:00:00' AND event_date <= '$monthEnd 00:00:00' ";
+
         if($this->user['role'] == 2){
-            $query = $this->db->doquery("SELECT * FROM {{table}}  ORDER BY event_date","events");
+            $query = $this->db->doquery("SELECT * FROM {{table}} WHERE $monthQuery ORDER BY event_date","events");
         }else{
-            $query = $this->db->doquery("SELECT * FROM {{table}} WHERE active='true'  ORDER BY event_date","events");
+            $query = $this->db->doquery("SELECT * FROM {{table}} WHERE $monthQuery AND active='true' ORDER BY event_date","events");
         }
         echo '
             <article class="filter">
                 <ul>
                     <li>
-                        <a href="?month=Januari">Januari</a>
+                        <a href="?month=Jan">Januari</a>
                     </li>
                     <li>
-                        <a href="?month=Februari">Februari</a>
+                        <a href="?month=Feb">Februari</a>
                     </li>
                     <li>
                         <a href="?month=Mar">Maart</a>

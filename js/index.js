@@ -1,26 +1,21 @@
 /**
  * Created by Yaron on 27-11-2015.
  */
-var filter = "";
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+
+
 $(document).ready(function(){
-    $("."+months[new Date().getMonth()]).fadeIn();
-    filter = months[new Date().getMonth()];
     $('#button').click(function(){
         scrollToContent(1000);
     });
-    $('.filter ul li').each(function (){
-        $(this).click(function(){
-            scrollToTop(1000);
-            $("."+filter).fadeOut();
-            $("."+$(this).data("filter")).fadeIn();
-            filter = $(this).data("filter");
-            setTimeout(function(){
-                scrollToContent(500);
-            },500);
-        });
-    });
 });
+$(document).scroll(function(){
+    var padding = 15 - $(this).scrollTop() / 20;
+    padding = padding < 3 ? 3 : padding;
+    $(".menu").css({padding: padding+"px 0"});
+});
+
 function scrollToContent(speed){
 
     $("body, html").stop().animate({
