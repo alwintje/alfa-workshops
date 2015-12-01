@@ -26,6 +26,7 @@ if(isset($_GET['logout'])){
     <link rel="stylesheet" type="text/css" href="styles/index.css" />
     <link rel="stylesheet" type="text/css" href="styles/base.css" />
     <link rel="stylesheet" type="text/css" href="styles/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="styles/responsive.css" />
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="js/index.js"></script>
 
