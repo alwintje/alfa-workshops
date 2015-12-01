@@ -18,32 +18,59 @@ class HandleEvents{
         $this->user = $user;
     }
     public function getAll(){
-
-        $query = $this->db->doquery("SELECT * FROM {{table}} ORDER BY event_date ","events");
+        if($this->user['role'] == 2){
+            $query = $this->db->doquery("SELECT * FROM {{table}}  ORDER BY event_date","events");
+        }else{
+            $query = $this->db->doquery("SELECT * FROM {{table}} WHERE active='true'  ORDER BY event_date","events");
+        }
         echo '
             <article class="filter">
                 <ul>
-                    <li data-filter="Jan">Januari</li>
-                    <li data-filter="Feb">Februari</li>
-                    <li data-filter="Mar">Maart</li>
-                    <li data-filter="Apr">April</li>
-                    <li data-filter="May">Mei</li>
-                    <li data-filter="Jun">Juni</li>
-                    <li data-filter="Jul">Juli</li>
-                    <li data-filter="Aug">Augustus</li>
-                    <li data-filter="Sep">September</li>
-                    <li data-filter="Oct">Oktober</li>
-                    <li data-filter="Nov">November</li>
-                    <li data-filter="Dec">December</li>
+                    <li>
+                        <a href="?month=Januari">Januari</a>
+                    </li>
+                    <li>
+                        <a href="?month=Februari">Februari</a>
+                    </li>
+                    <li>
+                        <a href="?month=Mar">Maart</a>
+                    </li>
+                    <li>
+                        <a href="?month=Apr">April</a>
+                    </li>
+                    <li>
+                        <a href="?month=May">Mei</a>
+                    </li>
+                    <li>
+                        <a href="?month=Jun">Juni</a>
+                    </li>
+                    <li>
+                        <a href="?month=Jul">Juli</a>
+                    </li>
+                    <li>
+                        <a href="?month=Aug">Augustus</a>
+                    </li>
+                    <li>
+                        <a href="?month=Sep">September</a>
+                    </li>
+                    <li>
+                        <a href="?month=Oct">Oktober</a>
+                    </li>
+                    <li>
+                        <a href="?month=Nov">November</a>
+                    </li>
+                    <li>
+                        <a href="?month=Dec">December</a>
+                    </li>
                 </ul>
             </article>
             ';
 
         while($row = mysqli_fetch_array($query)){
-            //
+            a
             $month = date("M", strtotime($row['event_date']));
             echo '
-            <article class="text-box '.$month.'">
+            <article class="text-box '.$month.' '.($row['active'] ? "" : "not-active").'">
                 <h1>'.$row['event_date'].'</h1>
                 <h2>'.$row['name'].'</h2>
                 <p> '.$row['description'].' </p>
@@ -83,6 +110,7 @@ class HandleEvents{
             $rating = $this->db->esc_str($_POST['rating']);
             $maxReg = $this->db->esc_str($_POST['max_registrations']);
             $mailConfirm = $this->db->esc_str($_POST['mail_confirm']);
+            $active = $this->db->esc_str($_POST['active']);
             $error = 0;
 
             // check op name and description
@@ -94,12 +122,12 @@ class HandleEvents{
 
 
             if($error == 0){
-                $this->db->doquery("INSERT INTO {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', max_registrations='$maxReg', mail_confirm='$mailConfirm'","events");
+                $this->db->doquery("INSERT INTO {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', max_registrations='$maxReg', mail_confirm='$mailConfirm', active='$active'","events");
 
                 echo '<span class="succes">Succesvol toegevoegd!</span>';
                 $this->form("?editEvent&add");
             }else{
-                $this->form("?editEvent&add",$name, $description, $date, $startdateRegistration, $enddateRegistration, $rating, $mailConfirm);
+                $this->form("?editEvent&add",$name, $description, $date, $startdateRegistration, $enddateRegistration, $rating, $mailConfirm,$active);
             }
         }else{
             $this->form("?editEvent&add");
@@ -125,6 +153,7 @@ class HandleEvents{
             $rating = $this->db->esc_str($_POST['rating']);
             $maxReg = $this->db->esc_str($_POST['max_registrations']);
             $mailConfirm = $this->db->esc_str($_POST['mail_confirm']);
+            $active = $this->db->esc_str($_POST['active']);
             $error = 0;
 
 
@@ -135,24 +164,24 @@ class HandleEvents{
             if(strlen($startdateRegistration > $enddateRegistration )){$error++; echo '<span class="error">De start datum mag niet groter zijn als de eind datum!</span>';}
 
             if($error == 0){
-                $this->db->doquery("UPDATE {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', max_registrations='$maxReg', mail_confirm='$mailConfirm' WHERE id='$id'","events");
+                $this->db->doquery("UPDATE {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', max_registrations='$maxReg', mail_confirm='$mailConfirm',set='$active' WHERE id='$id'","events");
 
                 echo '<span class="succes">Succesvol toegevoegd!</span>';
 
                 $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' LIMIT 1","events");
                 $r = mysqli_fetch_array($q);
-                $this->form("?editEvent&edit=".$id,$r['name'],$r['description'],$r['event_date'],$r['startdate_registration'],$r['enddate_registration'],$r['rating'],$r['mail_confirm']);
+                $this->form("?editEvent&edit=".$id,$r['name'],$r['description'],$r['event_date'],$r['startdate_registration'],$r['enddate_registration'],$r['rating'],$r['mail_confirm'],$r['active']);
             }else{
-                $this->form("?editEvent&edit=".$id,$name, $description, $date, $startdateRegistration, $enddateRegistration, $rating, $mailConfirm);
+                $this->form("?editEvent&edit=".$id,$name, $description, $date, $startdateRegistration, $enddateRegistration, $rating, $mailConfirm, $active);
             }
         }else{
             $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' LIMIT 1","events");
             $r = mysqli_fetch_array($q);
-            $this->form("?editEvent&edit=".$id,$r['name'],$r['description'],$r['event_date'],$r['startdate_registration'],$r['enddate_registration'],$r['rating'],$r['mail_confirm']);
+            $this->form("?editEvent&edit=".$id,$r['name'],$r['description'],$r['event_date'],$r['startdate_registration'],$r['enddate_registration'],$r['rating'],$r['mail_confirm'],$r['active']);
         }
     }
 
-    private function form($action,$name=false, $description=false, $date=false, $startdateReg=false, $enddateReg=false, $rating=false, $mailConfirm=false){
+    private function form($action,$name=false, $description=false, $date=false, $startdateReg=false, $enddateReg=false, $rating=false, $mailConfirm=false, $active=true){
 
         echo '
         <form action="'.$action.'" method="post">
@@ -201,6 +230,11 @@ class HandleEvents{
             <div id="mail_confirm" class="trueFalse">
                 <input type="radio" name="mail_confirm" value="1" id="true_mail_confirm" '.($mailConfirm ? 'checked="checked"' : "").'/> <label for="true_mail_confirm">Ja</label><br />
                 <input type="radio" name="mail_confirm" value="0" id="false_mail_confirm" '.(!$mailConfirm ? 'checked="checked"' : "").'/> <label for="false_mail_confirm">Nee</label>
+            </div>
+            <label for="active" class="headLabel">Mail bevestiging:</label>
+            <div id="active" class="trueFalse">
+                <input type="radio" name="active" value="1" id="true_active" '.($active ? 'checked="checked"' : "").'/> <label for="true_active">Actief</label><br />
+                <input type="radio" name="active" value="0" id="false_active" '.(!$active ? 'checked="checked"' : "").'/> <label for="false_active">Niet actief</label>
             </div>
             <input type="submit" name="add" value="Toevoegen" />
         </form>
