@@ -4,24 +4,53 @@
 
 
 
-
+var posx = 0;
+var posy = 0;
+var isTop = false;
+document.onmousemove = function(e){
+    posx = e.clientX;
+    posy = e.clientY;
+};
 $(document).ready(function(){
+    isTop = $(document).scrollTop() == 0;
     $('#button').click(function(){
         scrollToContent(1000);
     });
+
+    //document.querySelector(".header").onclick = function(e){
+    $(".header").click(function(){
+
+        if(isTop){
+            var img = document.createElement("img");
+            img.src = "http://i318.photobucket.com/albums/mm429/allenjeffries/private/broken-glass-psd44132.png";
+            img.style.position = "absolute";
+
+            img.style.left = posx+"px";
+            img.style.top = posy+"px";
+
+            img.style.width = "100px";
+            img.style.transform = "translate(-50%,-50%)";
+
+            img.setAttribute("class", "broken");
+
+            document.body.appendChild(img);
+        }
+    });
 });
 $(document).scroll(function(){
+    isTop = $(this).scrollTop() == 0;
+    console.log(isTop);
+
     var padding = 15 - $(this).scrollTop() / 20;
     padding = padding < 3 ? 3 : padding;
     $(".menu").css({padding: padding+"px 0"});
     if(document.querySelector(".header h2") == undefined){
         alert("Deze website is gemaakt door Yaron Lambers en Alwin Kroesen");
     }
-    document.querySelector(".header").onclick = function(e){
-        var img = document.createElement("img");
-        img.src = "http://i318.photobucket.com/albums/mm429/allenjeffries/private/broken-glass-psd44132.png";
-        e.target.appendChild(img);
-    };
+    var glasses = document.querySelectorAll(".broken");
+    for(var i=0; i<glasses.length;i++){
+        //glasses[i].
+    }
 });
 
 function scrollToContent(speed){
