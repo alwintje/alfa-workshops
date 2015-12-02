@@ -93,6 +93,7 @@ class Workshops {
             }
             if($this->user['role'] == 2){
                 echo ' <a class="button" href="?workshops=' . $id . '&edit=' . $row['id'] . '">Aanpassen</a>';
+                echo ' <a class="button" href="?workshops=' . $id . '&show=' . $row['id'] . '">Bekijk</a>';
             }
             echo '</div>';
             echo "</article>";
@@ -216,6 +217,16 @@ class Workshops {
 
 
 
+
+    }
+    public function show($event, $id){
+
+        $q = $this->db->doquery("SELECT * FROM {{table}} WHERE workshop_id='$id'","registrations");
+        while($row = mysqli_fetch_array($q)){
+            $query = $this->db->doquery("SELECT * FROM {{table}} WHERE id='".$row['user_id']."'","users");
+            $r = mysqli_fetch_array($query);
+            echo " ".$r['firstname']." ".$r['lastname']."<br />";
+        }
 
     }
 
