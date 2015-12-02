@@ -75,6 +75,7 @@ class Users{
             <label for="roles" class="headLabel">Gebruikerslevel:</label>
             <div id="roles" class="trueFalse">
                 <input type="radio" name="role" value="0" id="role_zero" '.($row['role'] == 0 ? 'checked="checked"' : "").'/> <label for="role_zero">Gebruiker</label><br />
+                <input type="radio" name="role" value="1" id="role_one" '.($row['role'] == 1 ? 'checked="checked"' : "").'/> <label for="role_one">Docent</label><br />
                 <input type="radio" name="role" value="2" id="role_two" '.($row['role'] == 2 ? 'checked="checked"' : "").'/> <label for="role_two">Administrator</label>
             </div>
             <label>

@@ -51,7 +51,7 @@ $mailHosts = explode(",", $settings['email_hosts']);
             $errors = $security->checkRegister($_POST['username'], $_POST['firstname'], $_POST['lastname'], $_POST['password'], $_POST['cpassword']);
         }
         ?>
-        <img src="img/alfa-college.png" />
+        <img src="img/alfa-college-blue.png" />
         <?php
 
         if ($errors != null) {

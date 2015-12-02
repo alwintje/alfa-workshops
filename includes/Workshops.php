@@ -78,21 +78,25 @@ class Workshops {
             echo '<h2>'.$row['name'].' - '.$row['description'].'</h2>';
             echo '<div class="rightBottom">';
             $registered_q = $this->db->doquery("SELECT * FROM {{table}} WHERE user_id='".$this->user['id']."' AND workshop_id='".$row['id']."' ","registrations");
-            if($inDate){
-                if(mysqli_num_rows($registered_q) > 0){
-                    echo '<a class="button" href="?workshops='.$id.'&unregister='.$row['id'].'">Afmelden</a>';
-                }else{
-                    if ($registrations < $maxRegEvent && $registrationsForThisWorkshop < $row['max_registration']) {
-                        echo '<a class="button" href="?workshops=' . $id . '&register=' . $row['id'] . '">Aanmelden</a>';
+            if($this->user['role'] != 1 && $this->user['role'] != 2){
+                if($inDate){
+                    if(mysqli_num_rows($registered_q) > 0){
+                        echo '<a class="button" href="?workshops='.$id.'&unregister='.$row['id'].'">Afmelden</a>';
+                    }else{
+                        if ($registrations < $maxRegEvent && $registrationsForThisWorkshop < $row['max_registration']) {
+                            echo '<a class="button" href="?workshops=' . $id . '&register=' . $row['id'] . '">Aanmelden</a>';
+                        }
                     }
-                }
-            }else{
-                if(mysqli_num_rows($registered_q) > 0){
-                    echo '<a class="button" href="#">Aangemeld</a>';
+                }else{
+                    if(mysqli_num_rows($registered_q) > 0){
+                        echo '<a class="button" href="#">Aangemeld</a>';
+                    }
                 }
             }
             if($this->user['role'] == 2){
                 echo ' <a class="button" href="?workshops=' . $id . '&edit=' . $row['id'] . '">Aanpassen</a>';
+            }
+            if($this->user['role'] == 2 || $this->user['role'] == 1){
                 echo ' <a class="button" href="?workshops=' . $id . '&show=' . $row['id'] . '">Bekijk</a>';
             }
             echo '</div>';

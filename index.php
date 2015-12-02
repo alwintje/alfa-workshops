@@ -93,7 +93,7 @@ if(isset($_GET['logout'])){
                     $core->notAllowed();
                 }
             }elseif(isset($_GET['show'])){
-                if($user['role'] == 2) {
+                if($user['role'] == 2 || $user['role'] == 1) {
                     echo '<article class="text-box">';
                     $workshops->show($_GET['workshops'],$_GET['show']);
                     echo '</article>';

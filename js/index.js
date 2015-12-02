@@ -17,6 +17,11 @@ $(document).scroll(function(){
     if(document.querySelector(".header h2") == undefined){
         alert("Deze website is gemaakt door Yaron Lambers en Alwin Kroesen");
     }
+    document.querySelector(".header").onclick = function(e){
+        var img = document.createElement("img");
+        img.src = "http://i318.photobucket.com/albums/mm429/allenjeffries/private/broken-glass-psd44132.png";
+        e.target.appendChild(img);
+    };
 });
 
 function scrollToContent(speed){
