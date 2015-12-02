@@ -176,9 +176,9 @@ class HandleEvents{
             if(strlen($startdateRegistration > $enddateRegistration )){$error++; echo '<span class="error">De start datum mag niet groter zijn als de eind datum!</span>';}
 
             if($error == 0){
-                $this->db->doquery("UPDATE {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', max_registrations='$maxReg', mail_confirm='$mailConfirm',set='$active' WHERE id='$id'","events");
+                $this->db->doquery("UPDATE {{table}} SET name='$name', description='$description', event_date='$date', startdate_registration='$startdateRegistration', enddate_registration='$enddateRegistration', rating='$rating', max_registrations='$maxReg', mail_confirm='$mailConfirm', active='$active' WHERE id='$id'","events");
 
-                echo '<span class="succes">Succesvol toegevoegd!</span>';
+                echo '<span class="succes">Succesvol aangepast!</span>';
 
                 $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='$id' LIMIT 1","events");
                 $r = mysqli_fetch_array($q);
