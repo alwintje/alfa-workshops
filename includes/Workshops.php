@@ -50,6 +50,30 @@ class Workshops {
 
                 if(mysqli_num_rows($registered_q) <= 0){
                     $this->db->doquery("INSERT INTO {{table}} SET  user_id='" . $this->user['id'] . "', workshop_id='" . $_GET['register'] . "' ", "registrations");
+
+                    $workshop_q = $this->db->doquery("SELECT name, start_time, end_time, location, event FROM {{table}} WHERE id='".$_GET['register']."' ","workshops");
+                    $workshop_r = mysqli_fetch_array($workshop_q);
+                    $events_q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='".$workshop_r['event']."'","events");
+                    $events_r = mysqli_fetch_array($events_q);
+                    if($events_r['mail_confirm']){
+                        $headers = "From: no-reply@workshopsalfacollege.com\r\n";
+                        $headers .= "MIME-Version: 1.0\r\n";
+                        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                        $startTime = date("H:i",strtotime($workshop_r['start_time']));
+                        $endTime = date("H:i",strtotime($workshop_r['end_time']));
+
+                        $message = '
+                            Hallo '.$this->user['firstname'].', <br />
+                            <br />
+                            U bent aangemeld voor de workshop '.$workshop_r['name'].'. Het begint om '.$startTime.' en is om '.$endTime.' afgelopen. Het wordt gehouden in '.$workshop_r['location'].'.<br />
+                            <br />
+                            Met vriendelijke groet, <br />
+                            <br />
+                            Workshops Alfa-College
+                        ';
+
+                        mail($this->user['email'], "Aanmelding - Workshops Alfa-College",$message,$headers);
+                    }
                     $registrations++;
                 }
             }

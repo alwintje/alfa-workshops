@@ -233,7 +233,7 @@ class HandleEvents{
                 <option value="9">9</option>
                 <option value="10">10</option>
             </select>
-            <label for="rating" class="headLabel">Waarderingen:</label>
+            <label for="rating" class="headLabel">Waarderingen (werkt nog niet):</label>
             <div id="rating" class="trueFalse">
                 <input type="radio" name="rating" value="1" id="true_rating" '.($rating ? 'checked="checked"' : "").'/> <label for="true_rating">Ja</label><br />
                 <input type="radio" name="rating" value="0" id="false_rating" '.(!$rating ? 'checked="checked"' : "").'/> <label for="false_rating">Nee</label>
@@ -243,7 +243,7 @@ class HandleEvents{
                 <input type="radio" name="mail_confirm" value="1" id="true_mail_confirm" '.($mailConfirm ? 'checked="checked"' : "").'/> <label for="true_mail_confirm">Ja</label><br />
                 <input type="radio" name="mail_confirm" value="0" id="false_mail_confirm" '.(!$mailConfirm ? 'checked="checked"' : "").'/> <label for="false_mail_confirm">Nee</label>
             </div>
-            <label for="active" class="headLabel">Mail bevestiging:</label>
+            <label for="active" class="headLabel">Activatie:</label>
             <div id="active" class="trueFalse">
                 <input type="radio" name="active" value="1" id="true_active" '.($active ? 'checked="checked"' : "").'/> <label for="true_active">Actief</label><br />
                 <input type="radio" name="active" value="0" id="false_active" '.(!$active ? 'checked="checked"' : "").'/> <label for="false_active">Niet actief</label>

@@ -31,7 +31,6 @@ $settings = mysqli_fetch_array($query);
 
 $mailHosts = explode(",", $settings['email_hosts']);
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,6 +91,31 @@ $mailHosts = explode(",", $settings['email_hosts']);
                 </div>
             ';
         }
+//        var_dump($_POST);
+        if(isset($_POST['forgot'])){
+            $errors = $security->forgotPass($_POST['mail']);
+        }
+        if(isset($_POST['changePass'])){
+            if($_POST['pass'] == $_POST['pass2']){
+                $errors = $security->changePass($_GET['id'], $_GET['checkCode'], $_POST['pass']);
+                if($errors == null){
+                    echo '
+                    <div class="succes">
+                        Wachtwoord succesvol aangepast.<br />
+                        U wordt automatisch doorverstuurd naar het inlogscherm.
+                    </div>
+                    ';
+                    $core->delay(5000);
+                    $core->loadPage("account.php");
+                }
+            }else{
+                echo '
+                    <div class="errors">
+                        Wachtwoorden zijn niet het zelfde.
+                    </div>
+                ';
+            }
+        }
         if ($errors != null) {
             echo '
             <div class="errors">
@@ -99,6 +123,19 @@ $mailHosts = explode(",", $settings['email_hosts']);
             </div>
                 ';
         }
+
+        if(isset($_GET['checkCode'])){
+
+            echo '
+            <form action="" method="post" id="loginRegisterForm" style="height: 150px;">
+                <div id="forgotWindow" style="height: 100%;">
+                    <input type="password" name="pass" placeholder="Nieuw wachtwoord" class="username"/>
+                    <input type="password" name="pass2" placeholder="Herhaal wachtwoord" class="username"/>
+                    <input type="submit" name="changePass" value="Verander" />
+                </div>
+            </form>
+            ';
+        }else{
 
         ?>
         <form action="?login" method="post" id="loginRegisterForm">
@@ -130,7 +167,9 @@ $mailHosts = explode(",", $settings['email_hosts']);
                 <input type="button" name="back" value="Terug" />
             </div>
         </form>
-
+        <?php
+        }
+        ?>
     </div>
 
     <script>

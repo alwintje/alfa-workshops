@@ -10,13 +10,14 @@ $security = new Security($core, $db);
 $user = $security->checksession();
 if(!$user){
     $core->loadPage("account.php");
+}else{
+    if($user['validated'] == 0){
+        $core->loadPage("account.php?notValidated");
+    }
 }
 
 if(isset($_GET['logout'])){
     $security->logout();
-}
-if($user['validated'] == 0){
-    $core->loadPage("account.php?notValidated");
 }
 ?>
 <!doctype html>
@@ -54,7 +55,7 @@ if($user['validated'] == 0){
         <h1>Alfa-college workshops</h1>
         <button id="button">Evenementen <i class="fa fa-arrow-down"></i> </button>
     </div>
-    <h2>&copy; Yaron Lambers en Alwin Kroesen</h2>
+    <h2>&copy; Yaron Lambers en Alwin Kroesen </h2>
     <div class="menu">
         <a class="logout" href="?logout">Uitloggen</a>
         <img src="img/alfa-college.png" />
@@ -88,7 +89,27 @@ if($user['validated'] == 0){
     </div>
     <section class="events" id="events">
         <?php
-        if(isset($_GET['workshops'])){
+        if(isset($_GET['users'])){
+
+            require_once("includes/Users.php");
+            $users = new Users($core,$db,$user,$security);
+            if(isset($_GET['edit'])){
+                if($user['role'] == 2) {
+                    echo '<article class="text-box">';
+                    $users->edit($_GET['edit']);
+                    echo '</article>';
+                }else{
+                    $core->notAllowed();
+                }
+            }else{
+                if($user['role'] == 2) {
+                    $users->getAll();
+                }else{
+                    $core->notAllowed();
+                }
+            }
+
+        }elseif(isset($_GET['workshops'])){
 
             require_once("includes/Workshops.php");
             $workshops = new Workshops($core,$db,$user);
@@ -118,22 +139,6 @@ if($user['validated'] == 0){
                 }
             }else{
                 $workshops->getWorkshops($_GET['workshops']);
-            }
-
-        }elseif(isset($_GET['users'])){
-
-            require_once("includes/Users.php");
-            $users = new Users($core,$db,$user,$security);
-            if(isset($_GET['edit'])){
-                if($user['role'] == 2) {
-                    echo '<article class="text-box">';
-                    $users->edit($_GET['edit']);
-                    echo '</article>';
-                }else{
-                    $core->notAllowed();
-                }
-            }else{
-                $users->getAll();
             }
 
         }else{
@@ -168,7 +173,4 @@ if($user['validated'] == 0){
         $core->checkLoad();
     ?>
 </body>
-
-<footer class="footer">
-</footer>
 </html>

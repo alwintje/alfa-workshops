@@ -100,7 +100,7 @@ class Security{
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-        $id = $this->db->doQueryWithId("INSERT INTO {{table}} SET email='$email', firstname='$firstname', lastname='$lastname', password='$pass', validate='$validate'  ","users");
+        $id = $this->db->doQueryWithId("INSERT INTO {{table}} SET email='$email', firstname='$firstname', lastname='$lastname', password='$pass', validate='$validate', edit_pass_token='".rand(11111,99999)."'  ","users");
 
         $message = '
             Hallo '.$firstname.', <br />
@@ -147,6 +147,56 @@ class Security{
         ';
 
         mail($email, "Workshops Alfa-College validatie",$message,$headers);
+    }
+    public function forgotPass($email){
+        $q = $this->db->doquery("SELECT * FROM {{table}} WHERE email='$email'","users");
+        if(mysqli_num_rows($q) <= 0){
+            return "Geen gebruiker gevonden.";
+        }
+        $r = mysqli_fetch_array($q);
+
+        $headers = "From: no-reply@workshopsalfacollege.com\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+        $email = $r['email'];
+        $firstname = $r['firstname'];
+        $token = rand(11111,99999);
+        $this->db->doquery("UPDATE {{table}} SET edit_pass_token='$token' WHERE id='".$r['id']."'", "users");
+
+
+        $message = '
+            Hallo '.$firstname.', <br />
+            <br />
+            U wilt uw wachtwoord wijzigen. Klik op de link hieronder om uw wachtwoord te wijzigen:<br />
+            <a href="http://workshopsalfacollege.com/account.php?id='.$r['id'].'&checkCode='.$token.'">http://workshopsalfacollege.com/account.php?id='.$r['id'].'&checkCode='.$token.'</a><br />
+            <br />
+            Met vriendelijke groet, <br />
+            <br />
+            Workshops Alfa-College
+        ';
+
+        mail($email, "Wachtwoord vergeten - workshops Alfa-College",$message,$headers);
+        return null;
+    }
+    public function changePass($id, $token, $pass){
+
+        $q = $this->db->doquery("SELECT email, edit_pass_token FROM {{table}} WHERE id='$id'","users");
+        if(mysqli_num_rows($q) <= 0){
+            return "Geen gebruiker gevonden.";
+        }
+        $r = mysqli_fetch_array($q);
+
+        if($r['edit_pass_token'] != $token){
+            return "Token is niet juist of het wachtwoord is al aangepast.";
+        }
+
+        $email = $r['email'];
+        $token = rand(11111,99999);
+        $this->db->doquery("UPDATE {{table}} SET password='".$this->makePass($pass,$email)."', edit_pass_token='$token' WHERE id='$id'", "users");
+
+        return null;
+
     }
 
     public function isEmail($email){

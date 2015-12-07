@@ -76,7 +76,7 @@
     position: absolute;
     bottom: 5px;
     right: 5px;
-    padding: 5px;
+    padding: 5px 10px 5px 5px;
     font-size: 25px;
     color: #00A2F4;
     /*color: #000;*/
@@ -85,6 +85,8 @@
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     border-radius: 15px;
+    z-index: 9;
+    cursor: pointer;
 }
 
 .menu{

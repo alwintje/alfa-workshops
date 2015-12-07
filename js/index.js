@@ -7,6 +7,7 @@
 var posx = 0;
 var posy = 0;
 var isTop = false;
+var headerAngle = 0;
 document.onmousemove = function(e){
     posx = e.clientX;
     posy = e.clientY;
@@ -22,20 +23,35 @@ $(document).ready(function(){
 
         if(isTop){
             var img = document.createElement("img");
-            img.src = "http://i318.photobucket.com/albums/mm429/allenjeffries/private/broken-glass-psd44132.png";
+            if(Math.floor(Math.random() * 2)+1 == 1){
+                img.src = "img/brokenglass1.png";
+            }else{
+                img.src = "img/brokenglass2.png";
+            }
             img.style.position = "absolute";
 
             img.style.left = posx+"px";
             img.style.top = posy+"px";
 
             img.style.width = "100px";
-            img.style.transform = "translate(-50%,-50%)";
+
+            var angle = Math.floor(Math.random() * 360);
+            img.style.transform = "translate(-50%,-50%) rotate("+angle+"deg)";
 
             img.setAttribute("class", "broken");
 
             document.querySelector(".header").appendChild(img);
         }
     },true);
+
+    document.querySelector(".header h2").onclick = function (){
+
+        var header = document.querySelector(".header h2");
+        header.style.transition = "500ms";
+        headerAngle += 360;
+        header.style.transform = "rotate("+headerAngle+"deg)";
+
+    };
 });
 $(document).scroll(function(){
     isTop = $(this).scrollTop() == 0;
@@ -52,7 +68,6 @@ $(document).scroll(function(){
         //glasses[i].
     }
 });
-
 function scrollToContent(speed){
 
     $("body, html").stop().animate({

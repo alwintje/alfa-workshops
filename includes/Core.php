@@ -8,8 +8,13 @@
 class Core{
 
     private $page = null;
+    private $delay = 0;
+
     public function loadPage($page){
         $this->page = $page;
+    }
+    public function delay($d){
+        $this->delay = $d;
     }
     public function checkLoad(){
         if($this->page != null){
@@ -20,9 +25,12 @@ class Core{
             }else{
                 $target = "_top";
             }
+
             echo '
     <script>
-        window.open("'.$this->page.'","'.$target.'");
+        setTimeout(function(){
+            window.open("'.$this->page.'","'.$target.'");
+        },'.$this->delay.');
     </script>
     ';
         }
