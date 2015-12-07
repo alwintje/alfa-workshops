@@ -8,15 +8,30 @@ $core = new Core();
 $db = new Database();
 $db->opendb();
 $security = new Security($core, $db);
-$user = false;
-if($security->checksession()){
-    $core->loadPage("index.php");
+$user = $security->checksession();
+$errors = null;
+
+if(isset($_GET['checkMail'])){
+    $security->checkMail();
+}
+if($user != false){
+    if(!$user['validated']){
+        $errors = "U moet uw account nog valideren.";
+    }else{
+        $core->loadPage("index.php");
+    }
+}else{
+    if(isset($_GET['notValidated'])){
+        $errors = "U moet uw account nog valideren.";
+    }
 }
 
 $query = $db->doquery("SELECT * FROM {{table}} WHERE active='1' LIMIT 1","settings");
 $settings = mysqli_fetch_array($query);
 
 $mailHosts = explode(",", $settings['email_hosts']);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +59,6 @@ $mailHosts = explode(",", $settings['email_hosts']);
 <!--    </section>-->
     <div id="apollo">
         <?php
-        $errors = null;
         if (isset($_POST['login'])) {
             $errors = $security->checkLogin($_POST['username'], $_POST['password']);
         }elseif(isset($_POST['register'])){
@@ -53,7 +67,31 @@ $mailHosts = explode(",", $settings['email_hosts']);
         ?>
         <img src="img/alfa-college-blue.png" />
         <?php
+            if(isset($_GET['validation']) && isset($_GET['id'])){
+                $q = $db->doquery("SELECT validate FROM {{table}} WHERE id='".$_GET['id']."'","users");
+                $r = mysqli_fetch_array($q);
+                if($r['validate'] == $_GET['validation']){
+                    $db->doquery("UPDATE {{table}} SET validated='1' WHERE id='".$_GET['id']."' ","users");
+                    echo '
+                        <div class="succes">
+                            Validatie is correct. <br />
+                            U kunt nu inloggen.
+                        </div>
+                    ';
+                }else{
+                    $errors = "Validatie is niet juist.";
+                }
+            }
+        if($errors == null && isset($_POST['register'])){
 
+            echo '
+                <div class="succes">
+                    U bent succesvol geregistreerd. <br />
+                    Check je email voor je validatie code.<br />
+                    Check ook je spam folder!
+                </div>
+            ';
+        }
         if ($errors != null) {
             echo '
             <div class="errors">

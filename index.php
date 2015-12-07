@@ -15,6 +15,9 @@ if(!$user){
 if(isset($_GET['logout'])){
     $security->logout();
 }
+if($user['validated'] == 0){
+    $core->loadPage("account.php?notValidated");
+}
 ?>
 <!doctype html>
 <html>

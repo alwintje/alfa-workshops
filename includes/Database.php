@@ -11,10 +11,10 @@ class Database{
     private $dbsettings = Array(
         //Dit moet aangepast worden.
 
-        "server"        => "localhost",	// MySQL server naam.
-        "user"          => "root",		// MySQL gebruikersnaam.
-        "pass"          => "",			// MySQL wachtwoord.
-        "name"          => "school",	// MySQL database naam.
+        "server"        => "workshopsalfacollege.com.mysql",	// MySQL server naam.
+        "user"          => "workshopsalfacollege_com",		// MySQL gebruikersnaam.
+        "pass"          => "cDdDuQsd",			// MySQL wachtwoord.
+        "name"          => "workshopsalfacollege_com",	// MySQL database naam.
         "prefix"        => "aw");	    // Eerste deel van tabellen. aw = alfa-wokshops
 
     private $mysqli;
@@ -37,7 +37,10 @@ class Database{
         return $sqlquery;
 
     }
-
+    public function doQueryWithId($query, $table){
+        $this->doquery($query, $table);
+        return $this->mysqli->insert_id;
+    }
     public function esc_str($string){
         return $this->mysqli->real_escape_string($string);
     }
