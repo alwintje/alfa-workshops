@@ -21,24 +21,26 @@ class Users{
     }
     public function getAll(){ // Krijg alle gebruikers
 
-        echo '<form action="POST">
+//        echo '<article class="text-box">';
+        echo '
+            <form action="" method="post">
                 <input type="text" name="search" placeholder="Zoek op naam" />
 
-                <input type="button" name="zoeken" value="Zoek"/>
+                <input type="submit" value="Zoeken"/>
              </form> <br/>
+
             ';
+//        echo '</article>';
 
-        if(!empty(isset($_POST['zoeken']))){
-            $search = $_POST['search'];
-
-            $zoekQuery = $this->db->doquery("SELECT * FROM {{table}} WHERE firstname LIKE '.$search.'  ", "users");
-
-            while($row = mysqli_fetch_array($zoekQuery)){
-                echo $row['name'];
-            }
-        }
 
         $q = $this->db->doquery("SELECT * FROM {{table}}","users");
+
+        if(isset($_POST['search'])){
+            $search = $this->db->esc_str($_POST['search']);
+
+            $q = $this->db->doquery("SELECT * FROM {{table}} WHERE firstname LIKE '%$search%' OR lastname LIKE '%$search%' OR email LIKE '%$search%'", "users");
+
+        }
         while($row = mysqli_fetch_array($q)){
 
             echo '<article class="text-box">';
@@ -46,7 +48,7 @@ class Users{
             echo "Email: ".$row['email'];
             echo '<br />';
             echo '<br />';
-            echo '<a class="edituser" href="?users&edit='.$row['id'].'">Wijzigen</>  ';
+            echo '<a class="edituser" href="?users&edit='.$row['id'].'">Wijzigen</a>  ';
             echo '</article>';
         }
     }
@@ -106,7 +108,4 @@ class Users{
 
 
 }
-
-?>
-
 
