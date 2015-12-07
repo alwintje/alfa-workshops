@@ -17,8 +17,8 @@ $(document).ready(function(){
         scrollToContent(1000);
     });
 
-    //document.querySelector(".header").onclick = function(e){
-    $(".header").click(function(){
+    document.querySelector(".header").addEventListener("click", function(e){
+
 
         if(isTop){
             var img = document.createElement("img");
@@ -33,9 +33,9 @@ $(document).ready(function(){
 
             img.setAttribute("class", "broken");
 
-            document.body.appendChild(img);
+            document.querySelector(".header").appendChild(img);
         }
-    });
+    },true);
 });
 $(document).scroll(function(){
     isTop = $(this).scrollTop() == 0;

@@ -48,7 +48,12 @@ class Security{
         if (mysqli_num_rows($query) != 1) {
             return 'Verkeerde mail of wachtwoord.';
         }else{
-            $_SESSION['alfa-workshops'] = $email."//".$this->makePass($pass, $email);
+            $r = mysqli_fetch_array($query);
+            if($r['validated']){
+                $_SESSION['alfa-workshops'] = $email."//".$this->makePass($pass, $email);
+            }else{
+                return 'U hebt u nog niet gevalideerd.';
+            }
             $this->core->loadPage("index.php");
         }
         return null;
@@ -88,14 +93,60 @@ class Security{
         }
 
         $pass = $this->makePass($password1, $email);
+        $validate = rand(11111,99999);
 
-        $query = $this->db->doquery("INSERT INTO {{table}} SET email='$email', firstname='$firstname', lastname='$lastname', password='$pass' ","users");
 
-        $_SESSION['alfa-workshops'] = $email."//".$pass;
-        $this->core->loadPage("index.php");
+        $headers = "From: no-reply@workshopsalfacollege.com\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+        $id = $this->db->doQueryWithId("INSERT INTO {{table}} SET email='$email', firstname='$firstname', lastname='$lastname', password='$pass', validate='$validate'  ","users");
+
+        $message = '
+            Hallo '.$firstname.', <br />
+            <br />
+            U moet uw account nog valideren. Dit kunt u doen door op de link hieronder te klikken:<br />
+            <a href="http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'">http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'</a><br />
+            <br />
+            Met vriendelijke groet, <br />
+            <br />
+            Workshops Alfa-College
+        ';
+
+        mail($email, "Workshops Alfa-College validatie",$message,$headers);
+
+//        $_SESSION['alfa-workshops'] = $email."//".$pass;
+        //$this->core->loadPage("index.php");
+
 
 
         return null;
+    }
+    public function checkMail(){
+        $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='1'","users");
+        $r = mysqli_fetch_array($q);
+        $headers = "From: no-reply@workshopsalfacollege.com\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+        $email = $r['email'];
+        $firstname = $r['firstname'];
+        $lastname = $r['lastname'];
+        $pass = $r['password'];
+        $validate = rand(11111,99999);
+        $id = $this->db->doQueryWithId("INSERT INTO {{table}} SET email='$email', firstname='$firstname', lastname='$lastname', password='$pass', validate='$validate'  ","users");
+
+        $message = '
+            Hallo '.$firstname.', <br />
+            <br />
+            U moet uw account nog valideren. Dit kunt u doen door op de link hieronder te klikken:<br />
+            <a href="http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'">http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'</a><br />
+            <br />
+            Met vriendelijke groet, <br />
+            <br />
+            Workshops Alfa-College
+        ';
+
+        mail($email, "Workshops Alfa-College validatie",$message,$headers);
     }
 
     public function isEmail($email){
@@ -128,6 +179,5 @@ class Security{
     public function makePass($pass, $mail){
         return md5($pass.$mail);
     }
-
 
 }
