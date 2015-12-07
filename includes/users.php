@@ -20,12 +20,31 @@ class Users{
         $this->security = $security;
     }
     public function getAll(){ // Krijg alle gebruikers
+
+        echo '<form action="POST">
+                <input type="text" name="search" placeholder="Zoek op naam" />
+
+                <input type="button" name="zoeken" value="Zoek"/>
+             </form> <br/>
+            ';
+
+        if(!empty(isset($_POST['zoeken']))){
+            $search = $_POST['search'];
+
+            $zoekQuery = $this->db->doquery("SELECT * FROM {{table}} WHERE firstname LIKE '.$search.'  ", "users");
+
+            while($row = mysqli_fetch_array($zoekQuery)){
+                echo $row['name'];
+            }
+        }
+
         $q = $this->db->doquery("SELECT * FROM {{table}}","users");
         while($row = mysqli_fetch_array($q)){
 
             echo '<article class="text-box">';
             echo "Naam: ".$row['firstname']." ".$row['lastname']."<br/>";
             echo "Email: ".$row['email'];
+            echo '<br />';
             echo '<br />';
             echo '<a class="edituser" href="?users&edit='.$row['id'].'">Wijzigen</>  ';
             echo '</article>';
