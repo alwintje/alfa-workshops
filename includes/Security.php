@@ -41,6 +41,7 @@ class Security{
     }
     public function checkLogin($email, $pass){
         $email = $this->db->esc_str($email);
+        $email = strtolower($email);
         $pass = $this->db->esc_str($pass);
 
         $query = $this->db->doquery("SELECT * FROM {{table}} WHERE email='$email' AND password='".$this->makePass($pass, $email)."'", "users");
@@ -60,6 +61,7 @@ class Security{
     }
     public function checkRegister($email, $firstname, $lastname, $password1, $password2){
         $email = $this->db->esc_str($email);
+        $email = strtolower($email);
         $firstname = $this->db->esc_str($firstname);
         $lastname = $this->db->esc_str($lastname);
         $password1 = $this->db->esc_str($password1);
@@ -115,7 +117,7 @@ class Security{
         $message = '
             Hallo '.$firstname.', <br />
             <br />
-            Bedankt voor uw registratie. U kunt nu inloggen met uw email en wachtwoord.
+            Bedankt voor uw registratie. U kunt nu inloggen met uw email en wachtwoord.<br />
             <br />
             Met vriendelijke groet, <br />
             <br />
@@ -132,6 +134,7 @@ class Security{
         return null;
     }
     public function checkMail(){
+
         $q = $this->db->doquery("SELECT * FROM {{table}} WHERE id='1'","users");
         $r = mysqli_fetch_array($q);
         $headers = "From: no-reply@workshopsalfacollege.com\r\n";
@@ -139,23 +142,37 @@ class Security{
         $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
         $email = $r['email'];
         $firstname = $r['firstname'];
-        $lastname = $r['lastname'];
-        $pass = $r['password'];
         $validate = rand(11111,99999);
-        $id = $this->db->doQueryWithId("INSERT INTO {{table}} SET email='$email', firstname='$firstname', lastname='$lastname', password='$pass', validate='$validate'  ","users");
 
+        $id = 1;
+//        $id = $this->db->doQueryWithId("INSERT INTO {{table}} SET email='$email', firstname='$firstname', lastname='$lastname', password='$pass', validate='$validate'  ","users");
+
+//        $message = '
+//            Hallo '.$firstname.', <br />
+//            <br />
+//            U moet uw account nog valideren. Dit kunt u doen door op de link hieronder te klikken:<br />
+//            <a href="http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'">http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'</a><br />
+//            <br />
+//            Met vriendelijke groet, <br />
+//            <br />
+//            Workshops Alfa-College
+//        ';
         $message = '
             Hallo '.$firstname.', <br />
             <br />
-            U moet uw account nog valideren. Dit kunt u doen door op de link hieronder te klikken:<br />
-            <a href="http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'">http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'</a><br />
+            Bedankt voor uw registratie. U kunt nu inloggen met uw email en wachtwoord.<br />
             <br />
             Met vriendelijke groet, <br />
             <br />
             Workshops Alfa-College
         ';
 
-        mail($email, "Workshops Alfa-College validatie",$message,$headers);
+
+        if(@mail($email, "Workshops Alfa-College validatie",$message,$headers)){
+            echo "mail verstuurd";
+        }else{
+            echo "mail niet verstuurd";
+        }
     }
     public function forgotPass($email){
         $q = $this->db->doquery("SELECT * FROM {{table}} WHERE email='$email'","users");
@@ -169,6 +186,7 @@ class Security{
         $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
         $email = $r['email'];
+        $email = strtolower($email);
         $firstname = $r['firstname'];
         $token = rand(11111,99999);
         $this->db->doquery("UPDATE {{table}} SET edit_pass_token='$token' WHERE id='".$r['id']."'", "users");
@@ -201,6 +219,7 @@ class Security{
         }
 
         $email = $r['email'];
+        $email = strtolower($email);
         $token = rand(11111,99999);
         $this->db->doquery("UPDATE {{table}} SET password='".$this->makePass($pass,$email)."', edit_pass_token='$token' WHERE id='$id'", "users");
 

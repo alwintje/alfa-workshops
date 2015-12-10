@@ -210,6 +210,35 @@ $mailHosts = explode(",", $settings['email_hosts']);
             }
 
         };
+        var whatIsEmail = document.createElement("span");
+        whatIsEmail.innerHTML = "voorletter(s).achternaam@student.alfa-college.nl<br /><span style='color: #F00;font-style: italic;'>Niet je actie account of leerlingnummer!</span>";
+        whatIsEmail.style.fontSize = "13px";
+        whatIsEmail.style.display = "block";
+        whatIsEmail.style.padding = "5px";
+        whatIsEmail.style.background = "#555";
+        whatIsEmail.style.color = "#FFF";
+        whatIsEmail.style.margin = "5px";
+        whatIsEmail.style.position = "absolute";
+        whatIsEmail.style.width = "330px";
+        whatIsEmail.style.top = "-50px";
+        whatIsEmail.style.height = "40px";
+        whatIsEmail.style.lineHeight = "20px";
+
+        whatIsEmail.style.zIndex = "10";
+        whatIsEmail.style.left = "-25px";// -15 (width is 30 bigger than parent), -5 (margin) en -5 (padding)
+
+        whatIsEmail.style.textAlign = "center";
+
+
+        email.onfocus = function(e){
+            var eElement = document.getElementById("apollo");
+            var beforeElement = document.getElementById("loginRegisterForm");
+
+            eElement.insertBefore(whatIsEmail, beforeElement);
+        };
+        email.onblur = function(e){
+            document.getElementById("apollo").removeChild(whatIsEmail);
+        };
         email.onkeyup = function(e){
 
             var values = e.originalTarget.value.split("@");
