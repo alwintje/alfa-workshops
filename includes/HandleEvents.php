@@ -23,10 +23,13 @@ class HandleEvents{
         $monthQuery = "";
         $monthStart = date("Y/m/d");
         $monthEnd = date("Y/m/d", strtotime(date("Y-M-d")) + 2592000);
+        $monthSmall = $monthsSmall[array_search(date("m"), $months)];
+
         if(isset($_GET['month'])) {
             $month = $months[array_search($_GET['month'], $monthsSmall)];
             $monthStart = date("Y/m/d", strtotime(date("Y") . " " . $month));
             $monthEnd = date("Y/m/d", strtotime(date("Y") . " " . $month) + 2592000);
+            $monthSmall = $_GET['month'];
         }
         $monthQuery = "event_date >= '$monthStart 00:00:00' AND event_date <= '$monthEnd 00:00:00' ";
 
@@ -37,6 +40,32 @@ class HandleEvents{
         }
         echo '
             <article class="filter">
+                <select onchange="changeDate(this)" class="mobile">
+                    <option value="Jan">Januari</option>
+                    <option value="Feb">Februari</option>
+                    <option value="Mar">Maart</option>
+                    <option value="Apr">April</option>
+                    <option value="May">Mei</option>
+                    <option value="Jun">Juni</option>
+                    <option value="Jul">Juli</option>
+                    <option value="Aug">Augustus</option>
+                    <option value="Sep">September</option>
+                    <option value="Oct">Oktober</option>
+                    <option value="Nov">November</option>
+                    <option value="Dec">December</option>
+                </select>
+                <script>
+                    var mob_filter = document.querySelector(".filter .mobile");
+                    var mob_filter_options = mob_filter.children;
+                    for(var i=0; i < mob_filter_options.length;i++){
+                        if(mob_filter_options[i].value == "'.$monthSmall.'"){
+                            mob_filter_options[i].setAttribute("selected","selected");
+                        }
+                    }
+                    function changeDate(t){
+                        window.location.href = "?month="+t.value;
+                    }
+                </script>
                 <ul>
                     <li>
                         <a href="?month=Jan">Januari</a>

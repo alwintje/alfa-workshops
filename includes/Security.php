@@ -26,8 +26,8 @@ class Security{
             $query = $this->db->doquery("SELECT * FROM {{table}} WHERE email='$theuser[0]' AND password='$theuser[1]'", "users");
 
             if (mysqli_num_rows($query) != 1) {
-                die("Er is iets mis met de sessions (Error 1).");
                 unset($_SESSION['alfa-workshops']);
+                die("Er is iets mis met de sessions (Error 1).");
             }
             $row = mysqli_fetch_array($query);
         }
@@ -100,20 +100,29 @@ class Security{
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-        $id = $this->db->doQueryWithId("INSERT INTO {{table}} SET email='$email', firstname='$firstname', lastname='$lastname', password='$pass', validate='$validate', edit_pass_token='".rand(11111,99999)."'  ","users");
+        $id = $this->db->doQueryWithId("INSERT INTO {{table}} SET email='$email', firstname='$firstname', lastname='$lastname', password='$pass', validate='$validate', edit_pass_token='".rand(11111,99999)."', validated='1'  ","users");
 
+//        $message = '
+//            Hallo '.$firstname.', <br />
+//            <br />
+//            U moet uw account nog valideren. Dit kunt u doen door op de link hieronder te klikken:<br />
+//            <a href="http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'">http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'</a><br />
+//            <br />
+//            Met vriendelijke groet, <br />
+//            <br />
+//            Workshops Alfa-College
+//        ';
         $message = '
             Hallo '.$firstname.', <br />
             <br />
-            U moet uw account nog valideren. Dit kunt u doen door op de link hieronder te klikken:<br />
-            <a href="http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'">http://workshopsalfacollege.com/account.php?validation='.$validate.'&id='.$id.'</a><br />
+            Bedankt voor uw registratie. U kunt nu inloggen met uw email en wachtwoord.
             <br />
             Met vriendelijke groet, <br />
             <br />
             Workshops Alfa-College
         ';
 
-        mail($email, "Workshops Alfa-College validatie",$message,$headers);
+        mail($email, "Workshops Alfa-College",$message,$headers);
 
 //        $_SESSION['alfa-workshops'] = $email."//".$pass;
         //$this->core->loadPage("index.php");

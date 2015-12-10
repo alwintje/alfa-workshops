@@ -22,6 +22,11 @@
     cursor: default;
     text-shadow: 2px 2px #000;
     margin-bottom: 50px;
+    -webkit-transition: font-size 500ms;
+    -moz-transition: font-size 500ms;
+    -ms-transition: font-size 500ms;
+    -o-transition: font-size 500ms;
+    transition: font-size 500ms;
 }
 .header-text #button::before{
     content: ' ';
@@ -91,7 +96,6 @@
 
 .menu{
     width: 100%;
-    min-width: 500px;
     height: 50px;
     background-color: rgba(0,0,0,0.7);
     position: fixed;
@@ -101,7 +105,12 @@
     z-index: 10;
     padding: 15px 0;
 }
-
+.menu .menu-mobile{
+    position: absolute;
+    display: none;
+    left: 10px;
+    margin-top: 10px;
+}
 .menu ul{
     position: absolute;
     display: inline-block;
@@ -179,17 +188,25 @@
 
 .events{
     width: 60%;
-    margin: 0 auto 100px auto;
-    padding: 40px 0 0 0;
+    margin: 40px auto 100px;
+    padding: 0 0 0;
+    -webkit-transition: width 500ms;
+    -moz-transition: width 500ms;
+    -ms-transition: width 500ms;
+    -o-transition: width 500ms;
+    transition: width 500ms;
 }
 
 .filter{
-    position: absolute;
-    top: -3px;
+    position: relative;
+    top: -43px;
     height: auto;
     padding: 5px;
     text-align: center;
     width: 100%;
+}
+.filter .mobile{
+    display: none;
 }
 .filter ul{
     padding: 0;

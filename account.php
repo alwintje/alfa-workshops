@@ -86,10 +86,11 @@ $mailHosts = explode(",", $settings['email_hosts']);
             echo '
                 <div class="succes">
                     U bent succesvol geregistreerd. <br />
-                    Check je email voor je validatie code.<br />
-                    Check ook je spam folder!
                 </div>
             ';
+
+//            Check je email voor je validatie code.<br />
+//                    Check ook je spam folder!
         }
 //        var_dump($_POST);
         if(isset($_POST['forgot'])){

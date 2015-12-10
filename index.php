@@ -59,6 +59,26 @@ if(isset($_GET['logout'])){
     <div class="menu">
         <a class="logout" href="?logout">Uitloggen</a>
         <img src="img/alfa-college.png" />
+        <select class="menu-mobile" onchange="mobileMenu(this)">
+            <option value="" selected="selected" disabled>Menu</option>
+            <option value="?">Evenementen</option>
+            <?php
+                if($user['role'] == 2){
+                    if(isset($_GET['workshops'])){
+                        echo '
+                            <option value="?workshops='.$_GET['workshops'].'&add">Workshop toevoegen</option>
+                            ';
+                    }else {
+                        echo '
+                            <option value="?add">Evenementen toevoegen</option>
+                            <option value="?users">Gebruikers beheren</option>
+                        ';
+                    }
+                }
+            ?>
+            <option value="?logout">Uitloggen</option>
+        </select>
+
         <ul>
             <li>
                 <a href="?">Evenementen</a>

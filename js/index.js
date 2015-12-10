@@ -52,7 +52,12 @@ $(document).ready(function(){
         header.style.transform = "rotate("+headerAngle+"deg)";
 
     };
+
 });
+
+function mobileMenu(t){
+    window.location.href = t.value;
+}
 $(document).scroll(function(){
     isTop = $(this).scrollTop() == 0;
     console.log(isTop);
